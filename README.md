@@ -1,1 +1,1 @@
-Demo: https://stark-island-54204.herokuapp.com
+Demo: https://stark-island-54204.herokuapp.com/index.html
