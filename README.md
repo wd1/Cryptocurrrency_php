@@ -3,6 +3,9 @@ Demo Application: https://stark-island-54204.herokuapp.com/index.html
 This is a simple tool which allows users to select different exchanges and crypto-assets, and then get price, order book information, and other data about the crypto asset.
 Furthermore, users can perform fake trades in the markets, as well as real trades on exchanges.
 
+Mockup of what it will look like (early iPad drawing)
+
+![alt mockupimage](http://stark-island-54204.herokuapp.com/images/mockup1.png)
 
 Structure
 
