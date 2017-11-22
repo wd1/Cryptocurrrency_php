@@ -61,6 +61,10 @@ A method for searching for other users by email and adding them to your "follow 
 
 The ability to make your mock or real portfolio data private
 
+In a "view My Portfolo" View, you can see your portfolio daily, weekly, monthly, YTD, and beginning of time gains/losses for mock or real portfolio, and share a snap shot of this data with friends as image with sperate link on social media: FB, Twitter, LinkedIn
+
+Login with Facebook or LinkedIn
+
 Simple messaging inside the app which allows traders to communicate with one another, and there should be an email notifcation containing the message to the recieving user, and it should also appear as n update in their navigation bar
 
 hen trades clear while you were not there, nitifcations should be added in your notifcation (bell bar), informing you of a sell order completing or what not, for both real and mock trades
