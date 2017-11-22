@@ -1,3 +1,17 @@
+ 
+    $(document).ready(function(){
+                userAuth();
+                initCandleChart();
+                listenForChartUpdate();
+
+
+            })
+
+
+
+
+
+
  function renderOrderBook(exchange, currencypair){
 
       $('.symbol1').html(currencypair.replace('USD', ''));
@@ -190,7 +204,7 @@ function formatNumber(val, chart, precision) {
 
  function placeOrder(){
 
-            alert("You must be signed in to place an order. Sign-up will be available soon");
+            alert("Real Orders coming soon. You will be able to add your authentication keys here, store them locally, and the orders will be placed and appear in your real balance above in the nav bar, next to your mock balances.");
           }
             function updateCandleChart(){
 
@@ -557,11 +571,258 @@ function listenForChartUpdate(){
                 $('#theLoader').fadeOut();
             }
 
-            $(document).ready(function(){
 
-                initCandleChart();
-                listenForChartUpdate();
-            })
+          
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+  function userAuth(){
+
+if(localStorage.getItem('oauth') != null && localStorage.getItem('oauth') != ""){
+  oauthString = "?oauth="+ localStorage.getItem('oauth') ;
+}
+else{
+  oauthString= "";
+}
+    $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/getUserInfo.php'+oauthString,
+      complete:function(transport){
+
+        theResp = $.parseJSON(transport.responseText);
+        if(theResp['status'] =='success'){
+           $('#user').html('Mock Portfolio: ');
+           $('#userBalance').html("$"+ numberWithCommas(parseFloat(theResp.balanceInfo['totalAssets']).toFixed(2)));
+          $('#signer').html("<a href='javascript:logout()'>Logout</>");
+        }
+        else{
+          localStorage.setItem('oauth', theResp.user[0]['oauth']);
+
+          $('#userBalance').html("$"+ numberWithCommas(parseFloat(theResp.balanceInfo['totalAssets']).toFixed(2)));
+          
+        }
+
+        if(typeof theResp['orders'] == "object"){
+          for(i in theResp['orders']){
+            thisOrder = theResp['orders'][i];
+            renderActiveOrders(thisOrder['rId'], thisOrder['timestamp'], thisOrder['type'], thisOrder['amount'], thisOrder['price'], thisOrder['symbol']);
+
+
+          }
+        }
+        
+
+
+      }
+    })
+  }
+
+  function register(){
+
+    if($('#signupEmail').val().length < 5){
+      alert("Please enter a valid email")
+      return;
+    }
+     if($('#signupPw').val().length < 2){
+      alert("Please enter a valid password")
+      return;
+    }
+
+    $('#signupForm button').html('signing up...')
+
+    if(localStorage.getItem('oauth') != null && localStorage.getItem('oauth') != ""){
+        oauthString = "?oauth="+ localStorage.getItem('oauth') ;
+      }
+    else{
+      oauthString= "";
+    }
+
+           $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/register.php'+oauthString,
+      data:{
+        email:$('#signupEmail').val(),
+        pw:$('#signupPw').val()
+      },
+      method:"POST",
+      complete:function(transport){
+
+        theResp = $.parseJSON(transport.responseText);
+        if(theResp['status'] =='success'){
+          $('#signupForm button').html('Please wait')
+          window.location=window.location.href;
+              
+        }
+        else{
+          alert("Sorry that email is already taken or invalid.");
+          $('#signupForm button').html('Finish')
+        }
+      }
+    })
+
+
+    }
+  
+
+  function login(){
+
+
+ if($('#loginEmail').val().length < 5){
+      alert("Please enter a valid email")
+      return;
+    }
+     if($('#loginPw').val().length < 2){
+      alert("Please enter a valid password")
+      return;
+    }
+
+
+
+    $('#loginForm button').html('logging in...')
+           $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/login.php',
+      data:{
+        email:$('#loginEmail').val(),
+        pw:$('#loginPw').val()
+      },
+      method:"POST",
+      complete:function(transport){
+
+        theResp = $.parseJSON(transport.responseText);
+        if(theResp['status'] =='success'){
+          $('#loginForm button').html('Please wait')
+     
+              
+        }
+        else{
+          alert("Something went wrong. Please try again");
+          $('#signupForm button').html('Finish')
+        }
+      }
+    })
+
+  }
+
+
+  function logout(){
+      $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/logout.php',
+      complete:function(transport){
+        localStorage.setItem('oauth', "");
+        window.location=window.location.href;
+      }
+    })
+  
+  }
+  function renderActiveOrders(orderId, timestamp, type, amount, price, currency){
+
+    theTrString = '<tr id="order-'+orderId+'" class=""><td>'+timestamp+'</td><td><i class="icn-cart-in"></i>'+type+'</td><td><i class="icn icn-BTC"></i>'+amount+'</td><td class="remains"><i class="icn icn-BTC"></i>'+amount+'</td><td>'+price+'</td><td><i class="icn icn-USD"></i>'+currency+'</td><td class="fee"> 0.00 </td><td class="action"><button class="btn btn-red btn-mini" onclick="cancelOrder('+orderId+')"><i class="icn-remove icon-white"></i> Cancel</button></td></tr>';
+    $('#orders-tbody').append(theTrString);
+
+  }
+
+  function cancelOrder(orderId){
+ 
+    $('#order-'+orderId).remove();
+
+    $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/cancelMockOrder.php?oauth='+localStorage.getItem('oauth')+'&orderId='+orderId,
+      complete:function(transport){
+        alert("Order Cancelled");
+        console.log(transport.responseText);
+      }
+    })
+  }
+
+
+  function placeMockBuyOrder(){
+
+    $('#mockBuyButton').html("Placing order...");
+    buyPrice = $('#buyPrice').val();
+    buyAmount= $('#buyAmount').val();
+    buySymbol = $('#currencypair').val().split("USD")[0];
+    buyType = "buy";
+
+    if(isNaN(buyPrice) || buyPrice==""){
+      alert("Please enter a buy price that is a number")
+      return;
+    }
+
+     if(isNaN(buyAmount || buyAmount=="")){
+      alert("Please enter a buy amount that is a number")
+      return;
+    }
+
+    placeMockOrder(buySymbol, buyPrice, buyAmount, buyType);
+
+  }
+  function placeMockSellOrder(){
+      $('#mockSellButton').html("Placing order...");
+    sellPrice = $('#sellPrice').val();
+    sellAmount= $('#sellAmount').val();
+   sellSymbol = $('#currencypair').val().split("USD")[0];
+   sellType = "sell";
+
+
+   if(isNaN(sellPrice) || sellPrice==""){
+      alert("Please enter a sell price that is a number")
+      return;
+    }
+
+     if(isNaN(sellAmount) || sellAmount==""){
+      alert("Please enter a sell amount that is a number")
+      return;
+    }
+
+      placeMockOrder(sellSymbol, sellPrice, sellAmount, sellType);
+  }
+
+  function placeMockOrder(symbol, price, amount, type){
+
+     if(localStorage.getItem('oauth') != null && localStorage.getItem('oauth') != ""){
+       theOrderData= {"symbol":symbol,"price":price,"amount":amount, "type":type, "oauth": localStorage.getItem('oauth')};
+      }
+    else{
+       theOrderData= {"symbol":symbol,"price":price,"amount":amount, "type":type};
+    }
+
+      $.ajax({
+        url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/createMockOrder.php',
+          data:theOrderData,
+
+          complete:function(transport){
+             $('#mockBuyButton').html("Placing Mock Order");
+             $('#mockSellButton').html("Placing Mock Order");
+          
+            theResp1 = $.parseJSON(transport.responseText);
+            console.log(theResp1);
+
+            if(theResp1['status']=="fail"){
+              alert(theResp1['msg']);
+              return;
+              }
+             $('#userBalance').html("$"+ numberWithCommas(theResp1.balanceInfo['totalAssets'].toFixed(2)));
+
+             if(theResp1['filledStatus']=="filled"){
+              alert("Order has been instantly filled ");
+
+             }
+             else{
+
+              renderActiveOrders(theResp1['data']['rId'], theResp1['data']['timestamp'], theResp1['data']['type'], theResp1['data']['amount'], theResp1['data']['price'], theResp1['data']['symbol']);
+              alert("Your order is now active. Once the market reaches your offer, it will be filled. You can view your order or cancel it below in 'Active Orders'.");
+
+
+             }
+
+
+
+          }
+      })
+  }
+
+
+
 
 
             

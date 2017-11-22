@@ -25,23 +25,115 @@
 <script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
 
 <script src="js/bootstrap.js"></script>
+<script src="js/lity.js"></script>
 <link rel="stylesheet" href="css/bootstrap.css" type="text/css" media="all" />
+<link rel="stylesheet" href="css/lity.css" type="text/css" media="all" />
 
 
 
 
-<div id="hello" class="container" style="text-align:center; padding:20px; font-size:10px">
+
+
+
+
+
+<div id="naver" style="width:100%; height:38px; background-color:#000; padding:10px; font-size:12px; position:fixed; top:0px; left:0px; z-index:100; opacity:.8">
+
+<div id="signer" style="float:right">
+ <a href="#signupForm" data-lity style="text-decoration:none; color:#fff"> Sign-up</a>
+ | 
+  <a href="#loginForm" data-lity style="text-decoration:none; color:#fff"> Login</a>
+</div>
+
+<div id="signer" style="float:right; margin-right:25px;">
+  <span id="user">Guest Mock Portfolio:</span> <b ><span id="userBalance">$25,000</span></b>
+</div>
+
+<div id="signer2" style="float:left">
+
+<b>x²</b>
+</div>
+
+</div>
+
+<div id="signupForm" style="height:auto; padding:50px; background-color:black; font-size:12px; text-align:center; color:white; " class="lity-hide lightboxes">
+
+  Sign-up
+<br><br>
+
+<input type="text" id="signupEmail" placeholder="E-mail" style="border-width:0px">
+<br>
+
+<input type="password" id="signupPw" placeholder="Password">
+<br><br>
+<button class="btn" onclick="register()">
+
+  Finish
+</button>
+  </div>
+
+
+
+
+<div id="loginForm" style="height:auto; padding:50px; background-color:black; font-size:12px; text-align:center; color:white; " class="lity-hide lightboxes">
+
+  Login
+<br><br>
+
+<input type="text" id="loginEmail" placeholder="E-mail" style="border-width:0px">
+<br>
+
+<input type="password" id="singupPw" placeholder="Password">
+<br><br>
+<button class="btn" onclick="login()">
+
+  Finish
+</button>
+  </div>
+
+
+
+
+
+
+
+<div id="hello" class="container" style="text-align:center; padding:20px; font-size:10px; margin-top:38px">
 <div class="row">
   <div class="col-sm-4">
 Exchange<br>
 <div class="dropdown">
   <div class="dropdown-dark">
 <select id="exchange" class="dropdown-select">
-    
+     <option value="bitfinex" disabled>Binance</option>
     <option value="bitfinex" selected>Bitfinex</option>
-   <!-- <option value="bitthumb">Bithumb</option>-->
-    <option value="liqui">Liqui</option>
-     <option value="poloniex">Poloniex</option>
+   <option value="bitfinex" disabled>Bithumb</option>
+    <option value="bitfinex" disabled>Bitstamp</option>
+<option value="bitfinex" disabled>Bittrex</option>
+  
+   <option value="bitfinex" disabled>CEX.IO</option>
+  
+  
+     <option value="bitfinex" disabled>Coinnest</option>
+   <option value="bitfinex" disabled>Coinone</option>
+    <option value="bitfinex" disabled>Etherdelta</option>
+    <option value="bitfinex" disabled>GDAX</option>
+    <option value="bitfinex" disabled>Gemini</option>
+     <option value="bitfinex" disabled>Huobi</option>
+     <option value="bitfinex" disabled>itBit</option>
+      <option value="bitfinex" disabled>Korbit</option>
+    <option value="bitfinex" disabled>Kraken</option>
+        <option value="liqui">Liqui</option>
+  
+   <option value="poloniex">Poloniex</option>
+   <option value="poloniex" disabled>Proof AMP</option>
+   
+  
+   
+   
+ 
+
+
+    
       
       
 
@@ -62,6 +154,19 @@ Currency Pair<br>
 <option value="ETHUSD" selected>ETH / USD</option>
       <option value="BCHUSD">BCH / USD</option>
       <option value="ETCUSD">ETC / USD</option>
+       <option value="LTCUSD">LTC / USD</option>
+         <option value="ETCUSD" disabled>XRP / USD</option>
+          <option value="ETCUSD" disabled>DASH / USD</option>
+                   <option value="ETCUSD" disabled>NEO / USD</option>
+                     <option value="ETCUSD" disabled>IOTA / USD</option>
+                       <option value="ETCUSD" disabled>MON / USD</option>
+                         <option value="ETCUSD" disabled>NEM / USD</option>
+                           <option value="ETCUSD" disabled>GLM / USD</option>
+                           <option value="ETCUSD" disabled>KYB / USD</option>
+                           <option value="ETCUSD" disabled>RDN / USD</option>
+                           <option value="ETCUSD" disabled>TAAS / USD</option>
+                           <option value="ETCUSD" disabled>0X / USD</option>
+                                <option value="ETCUSD" disabled>STRJ/ USD</option>
   
   </select>
 </div>
@@ -113,7 +218,7 @@ Period
 <label class="control-label" for="mt-amount-input-short">Amount to Buy</label>
 <div class="controls">
 <div class="input-group">
-<input id="mt-amount-input-short" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
+<input id="buyAmount" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
 <span id="mt-amount-symbol-short" class="input-group-addon symbol1">BTC</span>
 </div>
 <span id="mt-amount-help-inline-short" class="help-block"></span>
@@ -125,7 +230,7 @@ Period
 <label class="control-label" for="mt-amount-input-short">Price per <span class="symbol1">BTC</span></label>
 <div class="controls">
 <div class="input-group">
-<input id="mt-amount-input-short" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
+<input id="buyPrice" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
 <span id="mt-amount-symbol-short" class="input-group-addon">USD</span>
 </div>
 <span id="mt-amount-help-inline-short" class="help-block"></span>
@@ -134,6 +239,7 @@ Period
 
 
         <a href="javascript:placeOrder()" class="btn btn-primary">Place Order</a>
+        <a href="javascript:placeMockBuyOrder()" class="btn btn-primary" id="mockBuyButton">Place Mock Order</a>
       </div>
     </div>
 
@@ -152,7 +258,7 @@ Period
 <label class="control-label" for="mt-amount-input-short">Amount to Sell</label>
 <div class="controls">
 <div class="input-group">
-<input id="mt-amount-input-short" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
+<input id="sellAmount" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
 <span id="mt-amount-symbol-short" class="input-group-addon symbol1">BTC</span>
 </div>
 <span id="mt-amount-help-inline-short" class="help-block"></span>
@@ -164,7 +270,7 @@ Period
 <label class="control-label" for="mt-amount-input-short">Price per <span class="symbol1">BTC</span></label>
 <div class="controls">
 <div class="input-group">
-<input id="mt-amount-input-short" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
+<input id="sellPrice" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
 <span id="mt-amount-symbol-short" class="input-group-addon">USD</span>
 </div>
 <span id="mt-amount-help-inline-short" class="help-block"></span>
@@ -173,6 +279,7 @@ Period
 
 
         <a href="javascript:placeOrder()" class="btn btn-primary">Place Order</a>
+        <a href="javascript:placeMockSellOrder()" class="btn btn-primary" id="mockSellButton">Place Mock Order</a>
       </div>
     </div>
 
@@ -280,11 +387,11 @@ Period
 <th>Amount <span class="symbol1">BTC</span></th>
 <th><span class="symbol1">BTC</span> Remaining</th>
 <th>Price</th>
-<th class="symbol2">USD</th>
+<th class="symbol2">Currency</th>
 <th>Fee (%)</th>
 <th width="100">Cancel</th>
 </tr></thead>
-<tbody id="orders-tbody"><tr id="order-5022953523" class=""><td>2017-11-16<br>07:33:45</td><td><i class="icn-cart-in"></i> BUY</td><td><i class="icn icn-BTC"></i>0.01000000</td><td class="remains"><i class="icn icn-BTC"></i>0.01000000</td><td>300.0000</td><td><i class="icn icn-USD"></i>3.00</td><td class="fee"> 0.20 </td><td class="action"><button class="btn btn-red btn-mini"><i class="icn-remove icon-white"></i> Cancel</button></td></tr></tbody>
+<tbody id="orders-tbody"></tbody>
 </table>
 <div id="orders-loading" style="display: none;"></div>
 </div>
