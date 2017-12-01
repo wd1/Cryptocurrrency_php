@@ -225,6 +225,9 @@ function formatNumber(val, chart, precision) {
 
 
             function renderCandleChart(exchange, currencypair, period){
+
+
+
                 $.getJSON('https://stark-island-54204.herokuapp.com/cloud/api/beta/'+exchange+'.php?currencypair='+currencypair+"&period="+period, function (data) {
 console.log(data)
 hideLoading();
@@ -529,6 +532,10 @@ Highcharts.setOptions(Highcharts.theme);
         }]
     });
 });
+
+
+
+
             }
 
 
@@ -546,6 +553,8 @@ function listenForChartUpdate(){
         showLoading()
         updateCandleChart();
         updateOrderBook(whichExchange, whichCurrency);
+        getTicker();
+
     })
 }
 
@@ -557,6 +566,7 @@ function listenForChartUpdate(){
                 whichPeriod = $('#period').val();
                 renderCandleChart(whichExchange, whichCurrency, whichPeriod);
                 renderOrderBook(whichExchange, whichCurrency);
+                  getTicker();
             }
 
 
@@ -652,6 +662,29 @@ else{
       $('.realButton').show();
     })
 
+
+  }
+
+
+
+  function getTicker(theCurrencyPair){
+
+      $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/ticker.php',
+      data:{
+        'currencypair' : $('#currencypair').val()
+      },
+      method:"POST",
+      complete:function(transport){
+
+        theRespPair = $.parseJSON(transport.responseText);
+        $('#tickerPrice').html(numberWithCommas(parseFloat(theRespPair['ticker']['price']).toFixed(2)));
+        amountChanged =parseFloat(theRespPair['ticker']['change']);
+        percentageChanged = amountChanged/parseFloat(theRespPair['ticker']['price']);
+        $('#tickerChange').html( percentageChanged.toFixed(2)+"%");
+        $('#tickerCurrency').html($('#currencypair').val().split("USD")[0]);
+      }
+    })
 
   }
 
