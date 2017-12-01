@@ -1,363 +1,746 @@
-<!DOCTYPE HTML>
+
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Proof Exchange Prototype (Ugly & Uber-Not_Ready)</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc.">
+        <meta name="author" content="Coderthemes">
 
-    <style type="text/css">
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
 
-    </style>
-  </head>
-  <body>
-<script src="js/jquery-2.1.4.min.js"></script>
-<script src="js/highstock.js"></script>
-<script src="js/modules/drag-panes.js"></script>
-<script src="js/modules/exporting.js"></script>
+        <title>x²</title>
 
+        <!--Morris Chart CSS -->
+        <link rel="stylesheet" href="assets/plugins/morris/morris.css">
 
-<script src="js/amcharts.js"></script>
-<script src="https://www.amcharts.com/lib/3/serial.js"></script>
-<script src="https://www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
-<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-<link rel="stylesheet" href="css/main.css" type="text/css" media="all" />
-<!--<script src="https://www.amcharts.com/lib/3/themes/none.js"></script>-->
-<script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
+        <!-- App css -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/core.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/components.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/pages.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/menu.css" rel="stylesheet" type="text/css" />
+        <link href="assets/css/responsive.css" rel="stylesheet" type="text/css" />
 
-<script src="js/bootstrap.js"></script>
-<script src="js/lity.js"></script>
-<link rel="stylesheet" href="css/bootstrap.css" type="text/css" media="all" />
-<link rel="stylesheet" href="css/lity.css" type="text/css" media="all" />
+        <!-- HTML5 Shiv and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
 
+        <script src="assets/js/modernizr.min.js"></script>
 
-
-
-
-
+    </head>
 
 
+    <body class="fixed-left">
 
-<div id="naver" style="width:100%; height:38px; background-color:#000; padding:10px; font-size:12px; position:fixed; top:0px; left:0px; z-index:100; opacity:.8">
+        <!-- Begin page -->
+        <div id="wrapper">
 
-<div id="signer" style="float:right">
- <a href="#signupForm" data-lity style="text-decoration:none; color:#fff"> Sign-up</a>
- | 
-  <a href="#loginForm" data-lity style="text-decoration:none; color:#fff"> Login</a>
-</div>
+            <!-- Top Bar Start -->
+            <div class="topbar">
 
-<div id="signer" style="float:right; margin-right:25px;">
-  <span id="user">Guest Mock Portfolio:</span> <b ><span id="userBalance">$25,000</span></b>
-</div>
+                <!-- LOGO -->
+                <div class="topbar-left">
+                    <a href="index.html" class="logo" style="color:white !important">x²</a>
+                </div>
 
-<div id="signer2" style="float:left">
+                <!-- Button mobile view to collapse sidebar menu -->
+                <div class="navbar navbar-default topbar_parent" role="navigation">
+                    <div class="container topbar_responsive" style="    
+                ">
 
-<b>x²</b>
-</div>
+                        <!-- Page title -->
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <button class="button-menu-mobile open-left">
+                                    <i class="zmdi zmdi-menu"></i>
+                                </button>
+                            </li>
+                            <li>
+                                <h4 class="page-title"></h4>
+                            </li>
+                        </ul>
 
-</div>
+                        <!-- Right(Notification and Searchbox -->
+                        <ul id="top_rightbar" class="nav navbar-nav navbar-right">
+                            <li class="hidden-xs">
+                                <form role="search" class="app-search search_form">
+                                    <input type="text" placeholder="Search By Currency, News, Other"
+                                            class="form-control">
+                                    <a href=""><i class="fa fa-search"></i></a>
+                                </form>
+                            </li>
+                            <li class="hidden-xs">
+                                <div>
+                                    <p style="text-align:right;    padding-left: 20px;
+                                    padding-right: 40px;
+                                    margin-top: 18px;
+                                    margin-left: 20px;"><span style="color:#57c272">Mock Portfolio: <span id="userBalance">$25000</span></span><br><span style="color:#71b6f9">Market Portfolio: <span id="userRealBalance">$0</span></span></p>
+                                </div>
+                            </li>
+                            <li>
+                                <!-- Notification -->
+                                <div class="notification-box">
+                                    <ul class="list-inline m-b-0" style="margin-left: 30px;margin-right: 30px;">
+                                        <!-- <li>
+                                            <a href="javascript:void(0);" class="right-bar-toggle">
+                                                <i class="zmdi zmdi-notifications-none"></i>
+                                            </a>
+                                            <div class="noti-dot">
+                                                <span class="dot"></span>
+                                                <span class="pulse"></span>
+                                            </div>
+                                        </li>
+                                        <li style="margin-left: 20px;">
+                                            <a href="javascript:void(0);" class="right-bar-toggle">
+                                                <i class="zmdi zmdi-email"></i>
+                                            </a>
+                                            
+                                        </li> -->
+                                        <li style="margin-left: 20px;vertical-align: top;">
+                                           <span id="signer"> <a href="#signupForm" data-lity style="font-size:12px;opacity:.8;text-decoration:none; color:#fff"> Sign-up</a></span>
+                                        </li>
+                                        <li style="margin-left: 0px;vertical-align: top;">
+                                           <span id="signer2"> <a href="#loginForm" data-lity style="font-size:12px;opacity:.8;text-decoration:none; color:#fff"> Login</a></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- End Notification bar -->
+                            </li>
+                            
+                        </ul>
 
-<div id="signupForm" style="height:auto; padding:50px; background-color:black; font-size:12px; text-align:center; color:white; " class="lity-hide lightboxes">
-
-  Sign-up
-<br><br>
-
-<input type="text" id="signupEmail" placeholder="E-mail" style="border-width:0px">
-<br>
-
-<input type="password" id="signupPw" placeholder="Password">
-<br><br>
-<button class="btn" onclick="register()">
-
-  Finish
-</button>
-  </div>
-
-
-
-
-<div id="loginForm" style="height:auto; padding:50px; background-color:black; font-size:12px; text-align:center; color:white; " class="lity-hide lightboxes">
-
-  Login
-<br><br>
-
-<input type="text" id="loginEmail" placeholder="E-mail" style="border-width:0px">
-<br>
-
-<input type="password" id="singupPw" placeholder="Password">
-<br><br>
-<button class="btn" onclick="login()">
-
-  Finish
-</button>
-  </div>
-
-
-
-
-
-
-
-<div id="hello" class="container" style="text-align:center; padding:20px; font-size:10px; margin-top:38px">
-<div class="row">
-  <div class="col-sm-4">
-Exchange<br>
-<div class="dropdown">
-  <div class="dropdown-dark">
-<select id="exchange" class="dropdown-select">
-     <option value="binance" >Binance</option>
-    <option value="bitfinex" selected>Bitfinex</option>
-   <option value="bitfinex" disabled>Bithumb</option>
-    <option value="bitfinex" disabled>Bitstamp</option>
-<option value="bitfinex" disabled>Bittrex</option>
-  
-   <option value="bitfinex" disabled>CEX.IO</option>
-  
-  
-     <option value="bitfinex" disabled>Coinnest</option>
-   <option value="bitfinex" disabled>Coinone</option>
-    <option value="bitfinex" disabled>Etherdelta</option>
-    <option value="bitfinex" disabled>GDAX</option>
-    <option value="bitfinex" disabled>Gemini</option>
-     <option value="bitfinex" disabled>Huobi</option>
-     <option value="bitfinex" disabled>itBit</option>
-      <option value="bitfinex" disabled>Korbit</option>
-    <option value="bitfinex" disabled>Kraken</option>
-        <option value="liqui">Liqui</option>
-  
-   <option value="poloniex">Poloniex</option>
-   <option value="poloniex" disabled>Proof AMP</option>
-   
-  
-   
-   
- 
+                    </div><!-- end container -->
+                </div><!-- end navbar -->
+            </div>
+            <!-- Top Bar End -->
 
 
-    
-      
-      
+            <!-- ========== Left Sidebar Start ========== -->
+            <div class="left side-menu">
+                <div class="sidebar-inner slimscrollleft">
+
+                    <!-- User -->
+                    <div class="user-box">
+                       
+                        <h5><a href="#">Welcome</a> </h5>
+                        <ul class="list-inline">
+                            <li>
+                                <a href="#" >
+                                    <i class="zmdi zmdi-settings"></i>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="javascript:logout()" class="text-custom">
+                                    <i class="zmdi zmdi-power"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End User -->
+
+                    <!--- Sidemenu -->
+                    <div id="sidebar-menu">
+                        <ul>
+                            <li class="text-muted menu-title">Navigation</li>
+
+                            <li>
+                                <a href="index.html" class="waves-effect"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
+                            </li>
+
+                            <li>
+                                <a href="#" class="waves-effect"><i class="zmdi zmdi-chart"></i> <span> Portfolio </span> </a>
+                            </li>
+
+                               <li>
+                                <a href="#" class="waves-effect"><i class="zmdi zmdi-search"></i> <span> Search / Commands </span> </a>
+                            </li>
 
 
-</select>
-</div>
-</div>
-</div>
+
+                            <li>
+                                <a href="#" class="waves-effect"><i class="zmdi zmdi-accounts-alt"></i> <span> Colleagues </span> </a>
+                            </li>
+
+                             <li>
+                                <a href="#" class="waves-effect"><i class="zmdi zmdi-comments"></i> <span> Topic Chat </span> </a>
+                            </li>
+
+                              <li>
+                                <a href="#" class="waves-effect"><i class="zmdi zmdi-comment"></i> <span> Messenger </span> </a>
+                            </li>
+
+                             <li>
+                                <a href="#" class="waves-effect"><i class="zmdi zmdi-settings"></i> <span> Settings</span> </a>
+                            </li>
+
+                            <!--
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-invert-colors"></i> <span> User Interface </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="ui-buttons.html">Buttons</a></li>
+                                    <li><a href="ui-cards.html">Cards</a></li>
+                                    <li><a href="ui-draggable-cards.html">Draggable Cards</a></li>
+                                    <li><a href="ui-checkbox-radio.html">Checkboxs-Radios</a></li>
+                                    <li><a href="ui-material-icons.html">Material Design Icons</a></li>
+                                    <li><a href="ui-font-awesome-icons.html">Font Awesome</a></li>
+                                    <li><a href="ui-dripicons.html">Dripicons</a></li>
+                                    <li><a href="ui-themify-icons.html">Themify Icons</a></li>
+                                    <li><a href="ui-modals.html">Modals</a></li>
+                                    <li><a href="ui-notification.html">Notification</a></li>
+                                    <li><a href="ui-range-slider.html">Range Slider</a></li>
+                                    <li><a href="ui-components.html">Components</a>
+                                    <li><a href="ui-sweetalert.html">Sweet Alert</a>
+                                    <li><a href="ui-treeview.html">Tree view</a>
+                                    <li><a href="ui-widgets.html">Widgets</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-collection-text"></i><span class="label label-warning pull-right">7</span><span> Forms </span> </a>
+                                <ul class="list-unstyled">
+                                    <li><a href="form-elements.html">General Elements</a></li>
+                                    <li><a href="form-advanced.html">Advanced Form</a></li>
+                                    <li><a href="form-validation.html">Form Validation</a></li>
+                                    <li><a href="form-wizard.html">Form Wizard</a></li>
+                                    <li><a href="form-fileupload.html">Form Uploads</a></li>
+                                    <li><a href="form-wysiwig.html">Wysiwig Editors</a></li>
+                                    <li><a href="form-xeditable.html">X-editable</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-view-list"></i> <span> Tables </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="tables-basic.html">Basic Tables</a></li>
+                                    <li><a href="tables-datatable.html">Data Table</a></li>
+                                    <li><a href="tables-responsive.html">Responsive Table</a></li>
+                                    <li><a href="tables-editable.html">Editable Table</a></li>
+                                    <li><a href="tables-tablesaw.html">Tablesaw Table</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-chart"></i><span> Charts </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="chart-flot.html">Flot Chart</a></li>
+                                    <li><a href="chart-morris.html">Morris Chart</a></li>
+                                    <li><a href="chart-chartist.html">Chartist Charts</a></li>
+                                    <li><a href="chart-chartjs.html">Chartjs Chart</a></li>
+                                    <li><a href="chart-other.html">Other Chart</a></li>
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="calendar.html" class="waves-effect"><i class="zmdi zmdi-calendar"></i><span> Calendar </span></a>
+                            </li>
+
+                            <li>
+                                <a href="inbox.html" class="waves-effect"><i class="zmdi zmdi-email"></i><span class="label label-purple pull-right">New</span><span> Mail </span></a>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-collection-item"></i><span> Pages </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="page-starter.html">Starter Page</a></li>
+                                    <li><a href="page-login.html">Login</a></li>
+                                    <li><a href="page-register.html">Register</a></li>
+                                    <li><a href="page-recoverpw.html">Recover Password</a></li>
+                                    <li><a href="page-lock-screen.html">Lock Screen</a></li>
+                                    <li><a href="page-confirm-mail.html">Confirm Mail</a></li>
+                                    <li><a href="page-404.html">Error 404</a></li>
+                                    <li><a href="page-500.html">Error 500</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="has_sub">
+                                <a href="javascript:void(0);" class="waves-effect"><i class="zmdi zmdi-layers"></i><span>Extra Pages </span> <span class="menu-arrow"></span></a>
+                                <ul class="list-unstyled">
+                                    <li><a href="extras-projects.html">Projects</a></li>
+                                    <li><a href="extras-tour.html">Tour</a></li>
+                                    <li><a href="extras-taskboard.html">Taskboard</a></li>
+                                    <li><a href="extras-taskdetail.html">Task Detail</a></li>
+                                    <li><a href="extras-profile.html">Profile</a></li>
+                                    <li><a href="extras-maps.html">Maps</a></li>
+                                    <li><a href="extras-contact.html">Contact list</a></li>
+                                    <li><a href="extras-pricing.html">Pricing</a></li>
+                                    <li><a href="extras-timeline.html">Timeline</a></li>
+                                    <li><a href="extras-invoice.html">Invoice</a></li>
+                                    <li><a href="extras-faq.html">FAQ</a></li>
+                                    <li><a href="extras-gallery.html">Gallery</a></li>
+                                    <li><a href="extras-email-template.html">Email template</a></li>
+                                    <li><a href="extras-maintenance.html">Maintenance</a></li>
+                                    <li><a href="extras-comingsoon.html">Coming soon</a></li>
+                                </ul>
+                            </li>
+    -->
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <!-- Sidebar -->
+                    <div class="clearfix"></div>
+
+                </div>
+
+            </div>
+            <!-- Left Sidebar End -->
 
 
-<div class="col-sm-4">
 
-Currency Pair<br>
-<div class="dropdown">
-  <div class="dropdown-dark">
-<select id="currencypair" class="dropdown-select">
-       <option value="BTCUSD">BTC / USD</option>
-<option value="ETHUSD" selected>ETH / USD</option>
-      <option value="BCHUSD">BCH / USD</option>
-      <option value="ETCUSD">ETC / USD</option>
-       <option value="LTCUSD">LTC / USD</option>
-         <option value="ETCUSD" disabled>XRP / USD</option>
-          <option value="ETCUSD" disabled>DASH / USD</option>
-                   <option value="ETCUSD" disabled>NEO / USD</option>
-                     <option value="ETCUSD" disabled>IOTA / USD</option>
-                       <option value="ETCUSD" disabled>MON / USD</option>
-                         <option value="ETCUSD" disabled>NEM / USD</option>
-                           <option value="ETCUSD" disabled>GLM / USD</option>
-                           <option value="ETCUSD" disabled>KYB / USD</option>
-                           <option value="ETCUSD" disabled>RDN / USD</option>
-                           <option value="ETCUSD" disabled>TAAS / USD</option>
-                           <option value="ETCUSD" disabled>0X / USD</option>
-                                <option value="ETCUSD" disabled>STRJ/ USD</option>
-  
-  </select>
-</div>
-</div>
-</div>
+            <!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="content-page" style="background:#253138">
+                <!-- Start content -->
+                <script src="js/jquery-2.1.4.min.js"></script>
+                <script src="js/highstock.js"></script>
+                <script src="js/modules/drag-panes.js"></script>
+                <script src="js/modules/exporting.js"></script>
 
 
-<div class="col-sm-4">
+                <script src="js/amcharts.js"></script>
+                <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+                <script src="https://www.amcharts.com/lib/3/plugins/dataloader/dataloader.min.js"></script>
+                <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+                <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+                <link rel="stylesheet" href="css/main.css" type="text/css" media="all" />
+                <!--<script src="https://www.amcharts.com/lib/3/themes/none.js"></script>-->
+                <script src="https://www.amcharts.com/lib/3/themes/dark.js"></script>
 
-Period
-<br>
-
-<div class="dropdown">
-  <div class="dropdown-dark">
-
-<select id="period" class="dropdown-select">
-<option value="1m">1 minute</option>
-     <option value="5m">5 minutes</option>
-      <option value="15m">15 minutes</option>
-      <option value="30m">30 minutes</option>
-      <option value="1h" selected>1 hour</option>
-      <option value="1D">1 day</option>
-      <option value="7D">7 days</option>
-      <option value="1M">1 month</option>
-  </select>
-
-</div>
-</div>
-</div>
+                <script src="js/bootstrap.js"></script>
+                <script src="js/lity.js"></script>
+                <!-- <link rel="stylesheet" href="css/bootstrap.css" type="text/css" media="all" /> -->
+                <link rel="stylesheet" href="css/lity.css" type="text/css" media="all" />
 
 
-</div>
-
-</div>
-
-<div id="container" style="height: 400px; min-width: 310px"></div>
 
 
-<div id="chartdiv" style="background-color: #373535; color: #fff;"></div>
-<br><br>
 
-<div class="container">
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-block">
-        <h3>Buy <span class="symbol1">BTC</span></h3>
-         <div id="mt-amount-control-group-short" class="control-group form-group">
-<label class="control-label" for="mt-amount-input-short">Amount to Buy</label>
-<div class="controls">
+
+
+
+
+                
+                
+                <div id="signupForm" style="height:auto; padding:50px; background-color:#253138; font-size:23px; text-align:center; color:white; " class="lity-hide lightboxes col-md-4">
+
+                  Register
+                    <br><br>
+
+                    <input type="text" id="signupEmail" placeholder="E-mail" style="border-width: 0px;
+                    background: #475e6b !important;
+                    border: 1px solid #2f3e47;
+                    padding: 10px;
+                    border-radius: 5px;
+                    font-size: 14px;    width: 100%;
+                    ">
+                    <br>
+                    <input type="text" id="signupname" placeholder="Username" style="border-width: 0px;
+                    background: #475e6b !important;
+                    border: 1px solid #2f3e47;
+                    padding: 10px;
+                    border-radius: 5px;
+                    font-size: 14px;    width: 100%;
+                    ">
+                    <br>
+                    <input type="password" id="signupPw" style="border-width: 0px;
+                    background: #475e6b !important;
+                    border: 1px solid #2f3e47;
+                    padding: 10px;
+                    border-radius: 5px;
+                    font-size: 14px;    width: 100%;
+                    "placeholder="Password">
+                    <br>
+                    <div class="" style="font-size: 14px;text-align: left;">
+                        <label for="checkbox1" style="font-size:13px;font-weight:normal;">
+                            <input type="checkbox" id="checkbox1" name="checkbox1" value="option1"> I accept <span style="color: #5586b5;">Terms and Conditions</span>
+                        </label>
+                    </div>
+                    <button type="button" onclick="register()" class="btn btn-block" style="background-color: #5a8fc2;border: 1px solid #5a8fc2;">Sign Up</button>
+                    <br>
+                    <h6>or sign up with</h6>
+                    <div class="card-footer p-4">
+                        <div class="row">
+                            <div class="col-sm-6" style="border-right: 1px solid white;">
+                                <div>
+                                    <i class="fa fa-facebook-square" style="font-size:30px;color:white"></i>
+                                </div>
+                                <h6>Facebook</h6>
+                            </div>
+                            <div class="col-sm-6">
+                                <div>
+                                    <i class="fa fa-linkedin-square" style="font-size:30px;color:white"></i>
+                                </div>
+                                <h6>LinkedIn</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <h6>All ready have an account? <span style="color: #5586b5;">Log In</span></h6>
+                </div>
+
+
+
+
+                <div id="loginForm" style="height:auto; padding:50px;background-color:#253138; font-size:23px; text-align:center; color:white; " class="lity-hide lightboxes">
+
+                  Log In
+                    <br><br>
+                    <div class="card-footer p-4">
+                            <div class="row">
+                                <div class="col-sm-6" style="border-right: 1px solid white;">
+                                    <div>
+                                        <i class="fa fa-facebook-square" style="font-size:30px;color:white"></i>
+                                    </div>
+                                    <h6>Facebook</h6>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div>
+                                        <i class="fa fa-linkedin-square" style="font-size:30px;color:white"></i>
+                                    </div>
+                                    <h6>LinkedIn</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                    <input type="text" id="loginEmail" placeholder="Username" style="border-width: 0px;
+                    background: #475e6b !important;
+                    border: 1px solid #2f3e47;
+                    padding: 10px;
+                    border-radius: 5px;
+                    font-size: 14px;    width: 100%;
+                    ">
+                    <br>
+
+                    <input type="password" id="singupPw" placeholder="Password" style="border-width: 0px;
+                    background: #475e6b !important;
+                    border: 1px solid #2f3e47;
+                    padding: 10px;
+                    border-radius: 5px;
+                    font-size: 14px;    width: 100%;
+                    ">
+                    <div class="" style="font-size: 14px;text-align: left;">
+                        <label for="checkbox2" style="font-size:13px;font-weight:normal;">
+                            <input type="checkbox" id="checkbox1" name="checkbox2" value="option1"> Remember me 
+                        </label>
+                        <a href="" style="font-size:13px;margin-top:8px;float:right;color: #cf4d4f;">Forgot Password?</a>
+                    </div>
+                    <br>
+                    <button type="button" onclick="login()" class="btn btn-block" style="background-color: #5a8fc2;border: 1px solid #5a8fc2;">Log In</button>
+                    <h6>Don't have an account? <span style="color: #5586b5;">Sign Up</span></h6>
+                </div>
+
+
+
+
+
+                <div class="checkout-wrap" style="margin-top: 150px;
+                  ">
+                    <ul class="checkout-bar" style="margin-left:23px;">
+                            <a href="#">
+                        <!--<li class="visited first">-->
+                        <li class="active" style="">
+                            Analyze
+                        </li>
+                        
+                        <!--<li class="previous visited">Shipping & Billing</li>-->
+                        <li class="next">Mock Trade</li>
+                        
+                        <li class="next">Market Trade</li>
+                    </a>
+                            
+                    </ul>
+                </div>
+                <div id="main_panel" class="container" style="
+                margin-top: 20px;">
+                    <div class=" col-md-8" style="">
+                        <div class="card_panel" style="padding-left: 20px;
+                        padding-top: 15px;">
+                            <h3>Overview </h3>
+                            <div id="hello" class="container" style="text-align:center; padding:20px; font-size:10px; margin-top:10px">
+                                
+                            <div class="row">
+                            <div class="col-sm-4">
+                            Exchange<br>
+                            <div class="dropdown">
+                            <div class="dropdown-dark">
+                            <select id="exchange" class="dropdown-select">
+                                <option value="binance" >Binance</option>
+                                <option value="bitfinex" selected>Bitfinex</option>
+                            <option value="bitfinex" disabled>Bithumb</option>
+                                <option value="bitfinex" disabled>Bitstamp</option>
+                            <option value="bitfinex" disabled>Bittrex</option>
+                            
+                            <option value="bitfinex" disabled>CEX.IO</option>
+                            
+                            
+                                <option value="bitfinex" disabled>Coinnest</option>
+                            <option value="bitfinex" disabled>Coinone</option>
+                                <option value="bitfinex" disabled>Etherdelta</option>
+                                <option value="bitfinex" disabled>GDAX</option>
+                                <option value="bitfinex" disabled>Gemini</option>
+                                <option value="bitfinex" disabled>Huobi</option>
+                                <option value="bitfinex" disabled>itBit</option>
+                                <option value="bitfinex" disabled>Korbit</option>
+                                <option value="bitfinex" disabled>Kraken</option>
+                                    <option value="liqui">Liqui</option>
+                            
+                            <option value="poloniex">Poloniex</option>
+                            <option value="poloniex" disabled>Proof AMP</option>
+                            
+                            
+                            
+                            
+                            
+
+
+                                
+                                
+                                
+
+
+                            </select>
+                            </div>
+                            </div>
+                            </div>
+
+
+                            <div class="col-sm-4">
+
+                            Currency Pair<br>
+                            <div class="dropdown">
+                            <div class="dropdown-dark">
+                            <select id="currencypair" class="dropdown-select">
+                                <option value="BTCUSD">BTC / USD</option>
+                            <option value="ETHUSD" selected>ETH / USD</option>
+                                <option value="BCHUSD">BCH / USD</option>
+                                <option value="ETCUSD">ETC / USD</option>
+                                <option value="LTCUSD">LTC / USD</option>
+                                    <option value="ETCUSD" disabled>XRP / USD</option>
+                                    <option value="ETCUSD" disabled>DASH / USD</option>
+                                            <option value="ETCUSD" disabled>NEO / USD</option>
+                                                <option value="ETCUSD" disabled>IOTA / USD</option>
+                                                <option value="ETCUSD" disabled>MON / USD</option>
+                                                    <option value="ETCUSD" disabled>NEM / USD</option>
+                                                    <option value="ETCUSD" disabled>GLM / USD</option>
+                                                    <option value="ETCUSD" disabled>KYB / USD</option>
+                                                    <option value="ETCUSD" disabled>RDN / USD</option>
+                                                    <option value="ETCUSD" disabled>TAAS / USD</option>
+                                                    <option value="ETCUSD" disabled>0X / USD</option>
+                                                            <option value="ETCUSD" disabled>STRJ/ USD</option>
+                            
+                            </select>
+                            </div>
+                            </div>
+                            </div>
+
+
+                            <div class="col-sm-4">
+
+                            Period
+                            <br>
+
+                            <div class="dropdown">
+                            <div class="dropdown-dark">
+
+                            <select id="period" class="dropdown-select">
+                            <option value="1m">1 minute</option>
+                                <option value="5m">5 minutes</option>
+                                <option value="15m">15 minutes</option>
+                                <option value="30m">30 minutes</option>
+                                <option value="1h" selected>1 hour</option>
+                                <option value="1D">1 day</option>
+                                <option value="7D">7 days</option>
+                                <option value="1M">1 month</option>
+                            </select>
+
+                            </div>
+                            </div>
+                            </div>
+
+
+                            </div>
+
+                            </div>
+
+                            <div id="container" style="height: 400px; min-width: 310px"></div>
+
+
+                            
+                            <br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <!--start mock orders-->
+
+
+
+
+
+                             <div class="container" style="display: none;" id="mockOrders">
+                            <div class="row">
+                            <div class="col-sm-6">
+                                <div class="card">
+                                <div class="card-block">
+                                    <h3>Buy <span class="symbol1">BTC</span></h3>
+                                    <div id="mt-amount-control-group-short" class="control-group form-group">
+                            <label class="control-label" for="mt-amount-input-short">Amount to Buy</label>
+                           <div class="controls">
 <div class="input-group">
 <input id="buyAmount" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
 <span id="mt-amount-symbol-short" class="input-group-addon symbol1">BTC</span>
 </div>
 <span id="mt-amount-help-inline-short" class="help-block"></span>
 </div>
-</div>
+                            </div>
 
 
-<div id="mt-amount-control-group-short" class="control-group form-group">
-<label class="control-label" for="mt-amount-input-short">Price per <span class="symbol1">BTC</span></label>
-<div class="controls">
-<div class="input-group">
-<input id="buyPrice" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
-<span id="mt-amount-symbol-short" class="input-group-addon">USD</span>
-</div>
-<span id="mt-amount-help-inline-short" class="help-block"></span>
-</div>
-</div>
+                            <div id="mt-amount-control-group-short" class="control-group form-group">
+                            <label class="control-label" for="mt-amount-input-short">Price per <span class="symbol1">BTC</span></label>
+                            <div class="controls">
+                            <div class="input-group">
+                            <input id="buyPrice" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
+                            <span id="mt-amount-symbol-short" class="input-group-addon">USD</span>
+                            </div>
+                            <span id="mt-amount-help-inline-short" class="help-block"></span>
+                            </div>
+                            </div>
 
 
-        <a href="javascript:placeOrder()" class="btn btn-primary">Place Order</a>
-        <a href="javascript:placeMockBuyOrder()" class="btn btn-primary" id="mockBuyButton">Place Mock Order</a>
-      </div>
-    </div>
+                                    <a href="javascript:placeOrder()" class="btn btn-primary realButton">Place Order</a>
+                                    <a href="javascript:placeMockBuyOrder()" class="btn btn-primary mockButton" id="mockBuyButton">Place Mock Order</a>
+                                </div>
+                                </div>
 
 
-  </div>
+                            </div>
 
 
 
 
 
-  <div class="col-sm-6">
-    <div class="card">
-      <div class="card-block">
-        <h3>Sell <span class="symbol1">BTC</span></h3>
-         <div id="mt-amount-control-group-short" class="control-group form-group">
-<label class="control-label" for="mt-amount-input-short">Amount to Sell</label>
-<div class="controls">
-<div class="input-group">
-<input id="sellAmount" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
-<span id="mt-amount-symbol-short" class="input-group-addon symbol1">BTC</span>
-</div>
-<span id="mt-amount-help-inline-short" class="help-block"></span>
-</div>
-</div>
+                            <div class="col-sm-6">
+                                <div class="card">
+                                <div class="card-block">
+                                    <h3>Sell <span class="symbol1">BTC</span></h3>
+                                    <div id="mt-amount-control-group-short" class="control-group form-group">
+                            <label class="control-label" for="mt-amount-input-short">Amount to Sell</label>
+                            <div class="controls">
+                            <div class="input-group">
+                            <input id="sellAmount" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
+                            <span id="mt-amount-symbol-short" class="input-group-addon symbol1">BTC</span>
+                            </div>
+                            <span id="mt-amount-help-inline-short" class="help-block"></span>
+                            </div>
+                            </div>
 
 
-<div id="mt-amount-control-group-short" class="control-group form-group">
-<label class="control-label" for="mt-amount-input-short">Price per <span class="symbol1">BTC</span></label>
-<div class="controls">
-<div class="input-group">
-<input id="sellPrice" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
-<span id="mt-amount-symbol-short" class="input-group-addon">USD</span>
-</div>
-<span id="mt-amount-help-inline-short" class="help-block"></span>
-</div>
-</div>
+                            <div id="mt-amount-control-group-short" class="control-group form-group">
+                            <label class="control-label" for="mt-amount-input-short">Price per <span class="symbol1">BTC</span></label>
+                            <div class="controls">
+                            <div class="input-group">
+                            <input id="sellPrice" type="text" class="form-control input-small" name="amount" numbers-and-one-dot-only="">
+                            <span id="mt-amount-symbol-short" class="input-group-addon">USD</span>
+                            </div>
+                            <span id="mt-amount-help-inline-short" class="help-block"></span>
+                            </div>
+                            </div>
 
 
-        <a href="javascript:placeOrder()" class="btn btn-primary">Place Order</a>
-        <a href="javascript:placeMockSellOrder()" class="btn btn-primary" id="mockSellButton">Place Mock Order</a>
-      </div>
-    </div>
+                                    <a href="javascript:placeOrder()" class="btn btn-primary realButton">Place Order</a>
+                                    <a href="javascript:placeMockSellOrder()" class="btn btn-primary mockButton" id="mockSellButton">Place Mock Order</a>
+                                </div>
+                                </div>
 
 
-  </div>
+                            </div>
 
 
-</div>
+                            </div>
 
 
-<br><br>
+                            <br><br>
 
 
 
 
 
-<div class="container">
-<div class="row">
-  <div class="col-sm-6">
-    <div class="card">
-<div style="width: 96%">
-<header>
-<span class="title">Sell Orders</span>
-<span class="text-muted pull-right">
+                            <div class="container">
+                            <div class="row">
+                            <div class="col-sm-6">
+                                <div class="card">
+                            <div style="width: 96%">
+                            <header>
+                            <span class="title">Sell Orders</span>
+                            <span class="text-muted pull-right">
 
-</span>
-</header>
-<div style="overflow-y: hidden;height: auto;width: 106%;">
-<table id="md-sell" class="table table-bordered md-table">
-<thead>
-<tr>
-<th>Price per <span class="symbol1">BTC</span></th>
-<th><span class="symbol1">BTC</span> Amount</th>
+                            </span>
+                            </header>
+                            <div style="overflow-y: hidden;height: auto;width: 106%;">
+                            <table id="md-sell" class="table table-bordered md-table">
+                            <thead>
+                            <tr>
+                            <th>Price per <span class="symbol1">BTC</span></th>
+                            <th><span class="symbol1">BTC</span> Amount</th>
 
-</tr>
-</thead>
-<tbody id="md-sell-tbody"><tr id="md-sell-7583-9884" price="7583.9884" amount="19853200" t="sell" style="cursor: pointer;"><td>7583.9884</td><td class="amount"><i class="icn icn-BTC"></i>0.19853200</td></tr></tbody>
-</table>
-<div id="md-sell-loading" style="display: none;"><div id="floatingCirclesG" class="loading_animation">      <div class="f_circleG" id="frotateG_01"></div><div class="f_circleG" id="frotateG_02">  </div><div class="f_circleG" id="frotateG_03">  </div><div class="f_circleG" id="frotateG_04">  </div><div class="f_circleG" id="frotateG_05">  </div><div class="f_circleG" id="frotateG_06">  </div><div class="f_circleG" id="frotateG_07">  </div><div class="f_circleG" id="frotateG_08">  </div></div></div>
-</div>
-<div id="md-sell-help-text"></div>
-</div>
+                            </tr>
+                            </thead>
+                            <tbody id="md-sell-tbody"><tr id="md-sell-7583-9884" price="7583.9884" amount="19853200" t="sell" style="cursor: pointer;"><td>7583.9884</td><td class="amount"><i class="icn icn-BTC"></i>0.19853200</td></tr></tbody>
+                            </table>
+                            <div id="md-sell-loading" style="display: none;"><div id="floatingCirclesG" class="loading_animation">      <div class="f_circleG" id="frotateG_01"></div><div class="f_circleG" id="frotateG_02">  </div><div class="f_circleG" id="frotateG_03">  </div><div class="f_circleG" id="frotateG_04">  </div><div class="f_circleG" id="frotateG_05">  </div><div class="f_circleG" id="frotateG_06">  </div><div class="f_circleG" id="frotateG_07">  </div><div class="f_circleG" id="frotateG_08">  </div></div></div>
+                            </div>
+                            <div id="md-sell-help-text"></div>
+                            </div>
 
-</div>
-</div>
+                            </div>
+                            </div>
 
 
 
 
-  <div class="col-sm-6">
-    <div class="card">
+                            <div class="col-sm-6">
+                                <div class="card">
 
-<div style="width: 95%" class="pull-right">
-<header>
-<span class="title">Buy Orders</span>
-<span class="text-muted pull-right">
+                            <div style="width: 95%" class="pull-right">
+                            <header>
+                            <span class="title">Buy Orders</span>
+                            <span class="text-muted pull-right">
 
-</span>
-</header>
-  <div style="height: auto;overflow-y: hidden;width: 106%;">
-                <table id="md-buy" class="table table-bordered md-table">
-                <thead>
-                <tr>
-                <th>Price per <span class="symbol1">BTC</span></th>
-                <th><span class="symbol1">BTC</span> Amount</th>
+                            </span>
+                            </header>
+                            <div style="height: auto;overflow-y: hidden;width: 106%;">
+                                            <table id="md-buy" class="table table-bordered md-table">
+                                            <thead>
+                                            <tr>
+                                            <th>Price per <span class="symbol1">BTC</span></th>
+                                            <th><span class="symbol1">BTC</span> Amount</th>
 
-                </tr>
-                </thead>
-                <tbody id="md-buy-tbody"><tr id="md-buy-7569-0335" price="7569.0335" amount="2000000" t="buy" class="highlight-green" style="cursor: pointer;"><td>7569.0335</td><td class="amount"><i class="icn icn-BTC"></i>0.02000000</td></tr></tr>
-                </tbody>
-                </table>
-               
-  </div>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="md-buy-tbody"><tr id="md-buy-7569-0335" price="7569.0335" amount="2000000" t="buy" class="highlight-green" style="cursor: pointer;"><td>7569.0335</td><td class="amount"><i class="icn icn-BTC"></i>0.02000000</td></tr></tr>
+                                            </tbody>
+                                            </table>
+                                        
+                            </div>
 
-</div>
+                            </div>
 
-</div>
-</div>
+                            </div>
+                            </div>
 
 
 
@@ -365,62 +748,379 @@ Period
 
 
 
-</div>
-</div>
+                            </div>
+                            </div>
 
 
-<br><br>
+                            <br><br>
 
 
 
 
-<div id="trade-active-orders" class="active-orders" style="display: block;">
-<div class="row">
-<div class="col-xs-12">
-<h3>Active Orders <button style="float: right;" id="cancel-all-orders-button" class="btn btn-red btn-mini"><i class="icn-remove icon-white"></i>Cancel All</button></h3>
+                            <div id="trade-active-orders" class="active-orders" style="display: block;">
+                            <div class="row">
+                            <div class="col-xs-12">
+                            <h3>Active Orders <button style="float: right;" id="cancel-all-orders-button" class="btn btn-red btn-mini"><i class="icn-remove icon-white"></i>Cancel All</button></h3>
 
-<div style="overflow-y: hidden; height: 233px; background: transparent;">
-<table id="orders" class="table table-bordered">
-<thead>
-<tr><th>Date</th>
-<th>Type</th>
-<th>Amount <span class="symbol1">BTC</span></th>
-<th><span class="symbol1">BTC</span> Remaining</th>
-<th>Price</th>
-<th class="symbol2">Currency</th>
-<th>Fee (%)</th>
-<th width="100">Cancel</th>
-</tr></thead>
-<tbody id="orders-tbody"></tbody>
-</table>
-<div id="orders-loading" style="display: none;"></div>
-</div>
-<br>
-</div>
-</div>
-</div>
+                            <div style="overflow-y: hidden; height: 233px; background: transparent;">
+                            <table id="orders" class="table table-bordered">
+                            <thead>
+                            <tr><th>Date</th>
+                            <th>Type</th>
+                            <th>Amount <span class="symbol1">BTC</span></th>
+                            <th><span class="symbol1">BTC</span> Remaining</th>
+                            <th>Price</th>
+                            <th class="symbol2">Currency</th>
+                            <th>Fee (%)</th>
+                            <th width="100">Cancel</th>
+                            </tr></thead>
+                            <tbody id="orders-tbody"></tbody>
+                            </table>
+                            <div id="orders-loading" style="display: none;"></div>
+                            </div>
+                            <br>
+                            </div>
+                            </div>
+                            </div>
 
 
 
 
 
-</div>
+                            </div>
 
 
 
-<div id="theLoader" style="top:0px; position:fixed; left:0px; width:100%; height:100%; z-index:30; opacity:.9">
-
-<div class="loading">
-  <div class="bullet"></div>
-  <div class="bullet"></div>
-  <div class="bullet"></div>
-  <div class="bullet"></div>
-</div>
-
-</div>
-
-
-
-<script src="js/custom.js"></script>
-  </body>
+
+
+
+                            <!-- end mockOrders-->
+
+
+                  
+
+                           
+
+
+
+                            <div id="theLoader" style="top:0px; position:fixed; left:0px; width:100%; height:100%; z-index:30; opacity:.9">
+
+                            <div class="loading">
+                            <div class="bullet"></div>
+                            <div class="bullet"></div>
+                            <div class="bullet"></div>
+                            <div class="bullet"></div>
+                            </div>
+
+                            </div>
+
+
+
+                            <script src="js/custom.js"></script>
+
+                            
+                        </div>
+                        <div class="card_panel" style="margin-top:10px;padding:20px;margin-bottom: 10px;">
+                            <div id="trade-active-orders" class="active-orders" style="display: block;">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <h3>Portfolio &nbsp;&nbsp;<span style="font-size:30px;"> $30.0501</span></h3>
+    
+                                        <div class="container" style="overflow-y: hidden; background: transparent;">
+                                            <table id="orders" class="table table-bordered">
+                                                <thead style="border-bottom: 2px solid #636b6f;">
+                                                    <tr>
+                                                        <th style="width:30%;">Portfolio Value</th>
+                                                        <th style="width:25%;">$30,0501</th>
+                                                        <th style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;">Chg,$1D</th>
+                                                        <th style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;">Chg,$7D</th>
+                                                        <th style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;">Total Gains</th>
+                                                    </tr>
+                                                </thead>
+                                       
+                                                <tbody id="orders-tbody">
+                                                    <tr style="font-weight: 600;color:white;">
+                                                        <td style="width:30%;">Fiat</td>
+                                                        <td style="width:25%;">$10,501</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">4.34%</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">3.34%</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">1.23%</td>
+                                                    </tr>
+                                                    <tr style="font-weight: 600;color:white;border-bottom: 2px solid #636b6f;">
+                                                        <td style="width:30%;">Crypto</td>
+                                                        <td style="width:25%;">$20,000</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">3.45%</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">23.43%</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">118.23%</td>
+                                                    </tr>
+                                                    <tr style="font-weight: 600;color:white;">
+                                                        <td style="width:30%;">Bitcoin</td>
+                                                        <td style="width:25%;">1.2BTC(9,000USD)</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">1.12%</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">3.34%</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">56.34%</td>
+                                                    </tr>
+                                                    <tr style="font-weight: 600;color:white;">
+                                                        <td style="width:30%;">Ether</td>
+                                                        <td style="width:25%;">10 ETH(4,700USD)</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">50.43%</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">23.34%</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">80.43%</td>
+                                                    </tr>
+                                                    <tr style="font-weight: 600;color:white;">
+                                                        <td style="width:30%;">Dubai Marina Tokens</td>
+                                                        <td style="width:25%;">5(1,000USD)</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#7b454b;">3.44%</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">1.23%</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#7b454b;">0.32%</td>
+                                                    </tr>
+                                                    <tr style="font-weight: 600;color:white;">
+                                                        <td style="width:30%;">TaaS</td>
+                                                        <td style="width:25%;">50(50USD)</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">1.12%</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">3.34%</td>
+                                                        <td style="font-size: 11px;text-align:center;
+                                                        font-weight: normal;width:15%;color:#15a661;">56.34%</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div id="orders-loading" style="display: none;"></div>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div >
+                            <div id="watchlist" class="card_panel" style="color: #fff;padding:20px;">
+                                <div id="trade-active-orders" class="active-orders" style="display: block;">
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <h3>Watchlist &nbsp;&nbsp;
+                                                <input placeholder="AddSymbol" style="width: 40%;
+                                                border: 1px solid #636b6f;
+                                                border-radius: 5px;
+                                                font-size: 15px;
+                                                padding-left: 7px;
+                                                background-color: #475e6b !important;
+                                                color: white !important;">
+                                                <div id="watchlist_dot" style="display:none"></div>
+                                            </h3>
+        
+                                            <div class="container" style="overflow-y: hidden; background: transparent;">
+                                                <table id="orders" class="table table-bordered">
+                                                    <thead style="border-bottom: 2px solid #636b6f;">
+                                                        <tr>
+                                                            <th class="table_cell1" style="text-align:left;width:30%;">Symbol</th>
+                                                            <th class="table_cell1" style="text-align:left;width:25%;">Last</th>
+                                                            <th class="table_cell1" style="">Change(%)</th>
+                                                        </tr>
+                                                    </thead>
+                                            
+                                                    <tbody id="orders-tbody">
+                                                        <tr style="font-weight: 600;color:white;">
+                                                            <td class="table_cell1" style="text-align:left;width:30%;">BTCUS</td>
+                                                            <td class="table_cell1" style="text-align:left;width:25%;">8234.34</td>
+                                                            <td style="font-size: 11px;text-align:center;
+                                                            font-weight: normal;width:15%;color:#15a661;">1.23%</td>
+                                                        </tr>
+                                                        <tr style="font-weight: 600;color:white;">
+                                                            <td class="table_cell1" style="text-align:left;width:30%;">FXE</td>
+                                                            <td class="table_cell1" style="text-align:left;width:25%;">113.56</td>
+                                                            <td style="font-size: 11px;text-align:center;
+                                                            font-weight: normal;width:15%;color:#ab454b;">-0.23%</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div id="orders-loading" style="display: none;"></div>
+                                            </div>
+                                            <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card_panel" style="color: #fff;padding:20px;margin-top:10px;" >
+                                <h3 style="font-weight: lighter;
+                                ">Ethereum/Dollar<br>480.43<span style="font-size: 13px;text-align:center;
+                                font-weight: normal;width:15%;color:#15a661;">&nbsp;(5.23%)</span></h3>
+                                <div id="chartdiv" style="color: #fff;margin-top:10px;"></div>
+                            </div>
+                            
+                            <div id="blog_panel" class="card_panel" style="color: #fff;padding:20px;margin-top:10px;">
+                                    <div id="trade-active-orders" class="active-orders" style="display: block;">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <h4 style="font-weight: lighter;
+                                                ">Latest on ETHUSD
+                                                    
+                                                </h4>
+            
+                                                <div class="" style="overflow-y: hidden; background: transparent;border-bottom: 2px solid #636b6f;">
+                                                    <h4 style="font-weight: lighter;">Ethereum Price Races to All-Time High; Is $500 in Sight?</h4>
+                                                    <h5 style="color: grey;">Lorem ipsum dolor sit amet. consectetur adipiscing edit, sed do eiusmod tempor incididunt ut labore et dolore
+                                                        mgna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                                    </h5>
+                                                    <h5 style="color: lightgrey;">at Yahoo Finance<span style="float:right;">11 hours ago</span></h5>
+                                                </div>
+                                                <div class="" style="overflow-y: hidden; background: transparent;border-bottom: 2px solid #636b6f;">
+                                                    <h4 style="font-weight: lighter;">Ethereum Continues Improvements Amid Bitcoin Bickering</h4>
+                                                    <h5 style="color: grey;">Lorem ipsum dolor sit amet. consectetur adipiscing edit, sed do eiusmod tempor incididunt ut labore et dolore
+                                                        mgna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+                                                    </h5>
+                                                    <h5 style="color: lightgrey;">at Yahoo Finance<span style="float:right;">11 hours ago</span></h5>
+                                                </div>
+                                                <br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <footer class="footer text-right">
+                      2018 © x²
+                    </footer>
+                </div>
+            </div>
+
+
+            <!-- ============================================================== -->
+            <!-- End Right content here -->
+            <!-- ============================================================== -->
+
+
+            <!-- Right Sidebar -->
+            <div class="side-bar right-bar">
+                <a href="javascript:void(0);" class="right-bar-toggle">
+                    <i class="zmdi zmdi-close-circle-o"></i>
+                </a>
+                <h4 class="">Notifications</h4>
+                <div class="notification-list nicescroll">
+                    <ul class="list-group list-no-border user-list">
+                        <li class="list-group-item">
+                            <a href="#" class="user-list-item">
+                                <div class="avatar">
+                                    <img src="assets/images/users/avatar-2.jpg" alt="">
+                                </div>
+                                <div class="user-desc">
+                                    <span class="name">Michael Zenaty</span>
+                                    <span class="desc">There are new settings available</span>
+                                    <span class="time">2 hours ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#" class="user-list-item">
+                                <div class="icon bg-info">
+                                    <i class="zmdi zmdi-account"></i>
+                                </div>
+                                <div class="user-desc">
+                                    <span class="name">New Signup</span>
+                                    <span class="desc">There are new settings available</span>
+                                    <span class="time">5 hours ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#" class="user-list-item">
+                                <div class="icon bg-pink">
+                                    <i class="zmdi zmdi-comment"></i>
+                                </div>
+                                <div class="user-desc">
+                                    <span class="name">New Message received</span>
+                                    <span class="desc">There are new settings available</span>
+                                    <span class="time">1 day ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="list-group-item active">
+                            <a href="#" class="user-list-item">
+                                <div class="avatar">
+                                    <img src="assets/images/users/avatar-3.jpg" alt="">
+                                </div>
+                                <div class="user-desc">
+                                    <span class="name">James Anderson</span>
+                                    <span class="desc">There are new settings available</span>
+                                    <span class="time">2 days ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="list-group-item active">
+                            <a href="#" class="user-list-item">
+                                <div class="icon bg-warning">
+                                    <i class="zmdi zmdi-settings"></i>
+                                </div>
+                                <div class="user-desc">
+                                    <span class="name">Settings</span>
+                                    <span class="desc">There are new settings available</span>
+                                    <span class="time">1 day ago</span>
+                                </div>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <!-- /Right-bar -->
+
+        </div>
+        <!-- END wrapper -->
+
+
+
+        <script>
+            var resizefunc = [];
+        </script>
+
+        <!-- jQuery  -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/detect.js"></script>
+        <script src="assets/js/fastclick.js"></script>
+        <script src="assets/js/jquery.slimscroll.js"></script>
+        <script src="assets/js/jquery.blockUI.js"></script>
+        <script src="assets/js/waves.js"></script>
+        <script src="assets/js/jquery.nicescroll.js"></script>
+        <script src="assets/js/jquery.slimscroll.js"></script>
+        <script src="assets/js/jquery.scrollTo.min.js"></script>
+
+        <!-- KNOB JS -->
+        <!--[if IE]>
+        <script type="text/javascript" src="assets/plugins/jquery-knob/excanvas.js"></script>
+        <![endif]-->
+        <script src="assets/plugins/jquery-knob/jquery.knob.js"></script>
+
+        <!--Morris Chart-->
+        <script src="assets/plugins/morris/morris.min.js"></script>
+        <script src="assets/plugins/raphael/raphael-min.js"></script>
+
+        <!-- Dashboard init -->
+        <script src="assets/pages/jquery.dashboard.js"></script>
+
+        <!-- App js -->
+        <script src="assets/js/jquery.core.js"></script>
+        <script src="assets/js/jquery.app.js"></script>
+
+    </body>
 </html>

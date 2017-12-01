@@ -3,6 +3,7 @@
                 userAuth();
                 initCandleChart();
                 listenForChartUpdate();
+                circlesNavActivate();
 
 
             })
@@ -113,7 +114,7 @@
   },
   "graphs": [{
     "id": "bids",
-    "fillAlphas": 0.1,
+    "fillAlphas": 0.8,
     "lineAlpha": 1,
     "lineThickness": 2,
     "lineColor": "#0f0",
@@ -122,7 +123,7 @@
     "balloonFunction": balloon
   }, {
     "id": "asks",
-    "fillAlphas": 0.1,
+    "fillAlphas": 0.8,
     "lineAlpha": 1,
     "lineThickness": 2,
     "lineColor": "#f00",
@@ -152,17 +153,17 @@
     "textAlign": "left"
   },
   "valueAxes": [{
-    "title": "Volume"
+    "axisAlpha": 0,
+    "gridThickness": 0,
+    "labelsEnabled": false
   }],
   "categoryAxis": {
-    "title": "Price (BTC/ETH)",
-    "minHorizontalGap": 100,
-    "startOnAxis": true,
-    "showFirstLabel": false,
-    "showLastLabel": false
+    "axisAlpha": 0,
+    "gridThickness": 0,
+    "labelsEnabled": false
   },
   "export": {
-    "enabled": true
+    "enabled": false
   }
 });
 
@@ -270,13 +271,7 @@ if(typeof data.status =="string"){
    colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee',
       '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
    chart: {
-      backgroundColor: {
-         linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
-         stops: [
-            [0, '#2a2a2b'],
-            [1, '#3e3e40']
-         ]
-      },
+      backgroundColor: "#2f3e47",
       style: {
          fontFamily: '\'Unica One\', sans-serif'
       },
@@ -348,7 +343,10 @@ if(typeof data.status =="string"){
          fillColor: '#505053'
       },
       candlestick: {
-         lineColor: 'white'
+         lineColor: '#f05050',
+         color: "#f05050",
+         upColor: '#0dc569',
+         upLineColor: "#0dc569"
       },
       errorbar: {
          color: 'white'
@@ -458,7 +456,7 @@ if(typeof data.status =="string"){
 
    // special colors for some of the
    legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
-   background2: '#505053',
+   background2: 'red',
    dataLabelsColor: '#B0B0B3',
    textColor: '#C0C0C0',
    contrastTextColor: '#F0F0F3',
@@ -470,6 +468,8 @@ Highcharts.setOptions(Highcharts.theme);
 
 
     Highcharts.stockChart('container', {
+
+        panning:true,
 
         rangeSelector: {
             selected: 1
@@ -522,6 +522,7 @@ Highcharts.setOptions(Highcharts.theme);
             name: 'Volume',
             data: volume,
             yAxis: 1,
+            // upColor:"red"
             dataGrouping: {
                 units: groupingUnits
             }
@@ -594,7 +595,8 @@ else{
         if(theResp['status'] =='success'){
            $('#user').html('Mock Portfolio: ');
            $('#userBalance').html("$"+ numberWithCommas(parseFloat(theResp.balanceInfo['totalAssets']).toFixed(2)));
-          $('#signer').html("<a href='javascript:logout()'>Logout</>");
+          $('#signer').html("<a href='javascript:logout()' style='font-size:12px;opacity:.8;text-decoration:none; color:#fff'>Logout</>");
+          $('#signer2').hide();
         }
         else{
           localStorage.setItem('oauth', theResp.user[0]['oauth']);
@@ -616,6 +618,41 @@ else{
 
       }
     })
+  }
+
+
+  function circlesNavActivate(){
+
+    $('.checkout-bar li:nth(0)').on('click', function(){
+        $('.checkout-bar li').removeClass( 'active');
+        $(this).addClass('active');
+      $('#mockOrders').hide();
+      $('#hello, #container').show('slow');
+    })
+
+
+     $('.checkout-bar li:nth(1)').on('click', function(){
+
+       $('.checkout-bar li').removeClass('active');
+           $(this).addClass('active');
+      $('#mockOrders').show('slow');
+      $('#hello, #container').hide();
+      $('.mockButton').show();
+      $('.realButton').hide();
+    })
+
+
+        $('.checkout-bar li:nth(2)').on('click', function(){
+
+       $('.checkout-bar li').removeClass('active');
+           $(this).addClass('active');
+      $('#mockOrders').show('slow');
+      $('#hello, #container').hide();
+      $('.mockButton').hide();
+      $('.realButton').show();
+    })
+
+
   }
 
   function register(){

@@ -1,10 +1,10 @@
 body{
-    background-color:#373535 !important;
+    background-color:#253138 !important;
     color:#fff !important;
 }
 
 .card{
-     background-color:#373535 !important;
+     background-color:#253138 !important;
       color:#fff !important;
 }
 
@@ -16,7 +16,7 @@ input{
 
 
 .lightboxes{
-    min-width:300px;
+    min-width:400px;
     border-radius:10px;
 }
 .lightboxes input{
@@ -25,9 +25,202 @@ input{
     margin-bottom:10px;
     min-width:200px;
 }
+.checkout-wrap {
+  color: #444;
+  font-family: 'PT Sans Caption', sans-serif;
+  margin: 40px auto;
+  max-width: 1200px;
+  position: relative;
+}
 
+ul.checkout-bar li {
+  color: #ccc;
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 20px 14px 80px;
+  position: relative;
+}
+ul.checkout-bar li:before {
+  -webkit-box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+  background: #ddd;
+  /* border: 2px solid #FFF; */
+  border-radius: 50%;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  left: 20px;
+  line-height: 37px;
+  height: 35px;
+  position: absolute;
+  text-align: center;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+  top: 4px;
+  width: 35px;
+  z-index: 999;
+}
+ul.checkout-bar li.active {
+  color: #71b6f9;
+  font-weight: bold;
+}
+ul.checkout-bar li.active:before {
+  background: #71b6f9;
+  z-index: 99999;
+}
+ul.checkout-bar li.visited {
+  background: #ECECEC;
+  color: #57aed1;
+  z-index: 99999;
+}
+ul.checkout-bar li.visited:before {
+  /* background: #1e73be; */
+  z-index: 99999;
+}
+ul.checkout-bar li:nth-child(1):before {
+  content: " ";
+}
+ul.checkout-bar li:nth-child(2):before {
+  content: " ";
+}
+ul.checkout-bar li:nth-child(3):before {
+  content: " ";
+}
+ul.checkout-bar li:nth-child(3):after {
+  -webkit-animation: myanimation 3s 0;
+  background-size: 35px 35px;
+  background-color: #253138;
+  /* background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+  background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+  -webkit-box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2); */
+  content: "";
+  height: 15px;
+  width: 100%;
+  left: 50%;
+  position: absolute;
+  top: -50px;
+  z-index: 0;
+}
+ul.checkout-bar a {
+  color: #57aed1;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+}
 
+@media all and (min-width: 800px) {
+  .checkout-bar li.active:after {
+    /* -webkit-animation: myanimation 3s 0;
+    background-size: 35px 35px;
+    background-color: #8bc53f;
+    background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+    background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+    -webkit-box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+    content: "";
+    height: 15px;
+    width: 100%;
+    left: 50%;
+    position: absolute;
+    top: -50px;
+    z-index: 0; */
+  }
+  .card_panel{
+    background: #2f3e47;
+    margin-top: 75px;
+  }
+  .checkout-wrap {
+    margin: 80px auto;
+  }
 
+  ul.checkout-bar {
+    -webkit-box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+    background-size: 35px 35px;
+    background-color: #EcEcEc;
+    background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.4) 75%, transparent 75%, transparent);
+    background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.4) 75%, transparent 75%, transparent);
+    border-radius: 15px;
+    height: 5px;
+    margin: 0 auto;
+    padding: 0;
+    position: absolute;
+    width: 90%;
+  }
+  ul.checkout-bar:before {
+    background-size: 35px 35px;
+    background-color: #253138;
+    /* background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+    background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+    -webkit-box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 15px; */
+    content: " ";
+    height: 15px;
+    left: 0;
+    position: absolute;
+    width: 15%;
+  }
+  ul.checkout-bar li {
+    display: inline-block;
+    margin: 45px 0 0;
+    padding: 0;
+    text-align: center;
+    width: 33%;
+  }
+  ul.checkout-bar li:before {
+    height: 35px;
+    left: 40%;
+    line-height: 45px;
+    position: absolute;
+    top: -62px;
+    width: 35px;
+    z-index: 99;
+  }
+  ul.checkout-bar li.visited {
+    background: none;
+  }
+  ul.checkout-bar li.visited:after {
+    background-size: 35px 35px;
+    background-color: #1e73be;
+    background-image: -webkit-linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+    background-image: -moz-linear-gradient(-45deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent);
+    -webkit-box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 2px 2px 2px 0px rgba(0, 0, 0, 0.2);
+    content: "";
+    height: 15px;
+    left: 50%;
+    position: absolute;
+    top: -50px;
+    width: 100%;
+    z-index: 99;
+  }
+}
+.select_exchange {
+  background:#475e6b;
+}
+@media (max-width: 1153px) and (min-width: 800px) {
+  ul.checkout-bar {
+    /* width: 32%; */
+  }
+  ul.checkout-bar li:nth-child(3) {
+    width:32%;
+  }
+}
+@media (max-width: 800px) {
+  .checkout-wrap {
+    display:none;
+  }
+}
+@media (max-width:550px) {
+  .forced #top_rightbar{
+    display: none;
+  }
+  .forced .topbar_parent{
+    background:#2f3e47;
+}
+}
 /*
  * Copyright (c) 2012-2013 Thibaut Courouble
  * http://www.cssflow.com
@@ -40,13 +233,61 @@ input{
  *
  * Original PSD by Hemn Chawroka: http://goo.gl/nXZHJ
  */
-
+.table_cell1{
+  font-size: 11px;text-align:center;
+  font-weight: normal;width:15%;
+}
+ #watchlist_dot {
+  position: relative;
+  float:right;
+  /* background: #3F3C53; */
+  width: 30px;
+  height: 40px;
+  color: white;
+  border-radius: 50%;
+  /* box-shadow: 0px 0px 15px 1px #4185BC; */
+  /* margin: 50px; */
+}
+#watchlist_dot:after {
+  content: 'â€¢â€¢â€¢';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(90deg);
+  font-size: 15px; 
+  letter-spacing: 4px;
+  margin-top: 2px;
+}
+ input::-webkit-input-placeholder {
+  color: white !important;
+  }
+   
+  input:-moz-placeholder { /* Firefox 18- */
+  color: white !important;  
+  }
+   
+  input::-moz-placeholder {  /* Firefox 19+ */
+  color: white !important;  
+  }
+   
+  input:-ms-input-placeholder {  
+  color: white !important;  
+  }
 #chartdiv {
   width: 100%;
-  height: 500px;
+  height: 200px;
 }
 
+#watchlist{
+  width: 100%;
+  height: 300px;
+}
 
+#blog_panel {
+  width:100%;
+  /* height: 600px; */
+  margin-bottom: 10px;
+}
 .dropdown {
   display: inline-block;
   position: relative;
