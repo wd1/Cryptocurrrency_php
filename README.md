@@ -8,7 +8,7 @@ Design (Vision) of the App for the upcoming alpha release:
 
 ![alt mockupimage](http://stark-island-54204.herokuapp.com/images/screen4.png)
 
-![alt mockupimage](http://stark-island-54204.herokuapp.com/images/screen5.png)
+![alt mockupimage](http://stark-island-54204.herokuapp.com/images/screen55.png)
 
 ![alt mockupimage](http://stark-island-54204.herokuapp.com/images/screen6.png)
 
@@ -42,6 +42,7 @@ All functions are named specifically after what they do, so reading the function
 userAuth function authenicates users.
 
 Guest users are created accounts when anyone accesses the application. They can perform trades as guests, and when they leave and re-enter the page, their trades and portfolio balances are there. If they sign-up, their trades are added to their updated account. Authentication is handled by a localStorage variable which is the oauth varibale. 
+
 
 
 
@@ -88,6 +89,12 @@ The ability to make your mock or real portfolio data private
 In a "view My Portfolo" View, you can see your portfolio daily, weekly, monthly, YTD, and beginning of time gains/losses for mock or real portfolio, and share a snap shot of this data with friends as image with sperate link on social media: FB, Twitter, LinkedIn
 
 Login with Facebook or LinkedIn
+
+Get the ticker price to be reflectant of the exchange you're on instead of general
+
+Tabs for percent change under ticker
+
+Make the highchart go to the right zoom for rendering candlesticks on movbile, tablet and narrow screens
 
 Simple messaging inside the app which allows traders to communicate with one another, and there should be an email notifcation containing the message to the recieving user, and it should also appear as n update in their navigation bar
 
