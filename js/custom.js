@@ -28,7 +28,7 @@ $('#resultsContainer').hide();
   showLoading();
 
   $.ajax({
-    url:'http://stark-island-54204.herokuapp.com/cloud/api/beta/getStockChart.php',
+    url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/getStockChart.php',
     data:{'symbol':symbol, 'period':thePeriod},
 
     complete:function(transport){
