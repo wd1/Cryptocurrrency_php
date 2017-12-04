@@ -5,12 +5,427 @@
                 listenForChartUpdate();
                 circlesNavActivate();
 
+                //for when user clicks out of suggested results
+                removeResultsListen();
+
 
             })
 
 
 
+//variable for not flickering the results autocomplete
+justRenderedResults = false;
+function renderNonExchangeAveragePriceMaybeStock(symbol, name){
+justRenderedResults = true;
 
+setTimeout(function(){
+  justRenderedResults=false;
+}, 3000);
+
+$('#resultsContainer').hide();
+ $('#searchInput').val(name);
+  thePeriod = $('#period').val();
+  showLoading();
+
+  $.ajax({
+    url:'http://stark-island-54204.herokuapp.com/cloud/api/beta/getStockChart.php',
+    data:{'symbol':symbol, 'period':thePeriod},
+
+    complete:function(transport){
+      hideLoading();
+      stockResp = $.parseJSON(transport.responseText);
+      theSymbol = symbol;
+
+
+      if(stockResp.info.length==0){
+
+
+
+        alert("No chart data for this");
+       
+        return;
+      }
+    
+
+
+
+
+
+
+
+
+
+
+      currencyExists=false;
+      $('#currencypair option').each(function(){
+        if($(this).val().indexOf(symbol) != -1){
+          console.log('yaaaa');
+
+          currencyExists = true;
+          if($(this).val() == symbol){
+          $('#currencypair').val(symbol);
+          $('#exchange').val(stockResp['info'][0]['exchange']);
+          console.log('updated');
+
+            if(stockResp.info[0]['type'] =="crypto"){
+              $('#hello select').trigger('change');
+              return;
+            }
+
+
+          }
+        }
+      })
+
+      if(currencyExists==false){
+
+        $('#currencypair').append('<option value="'+theSymbol+'-maybeNotCrypto">'+theSymbol+'</option>');
+        
+
+        $('#exchange').append('<option value="'+stockResp.info[0]['exchange']+'-maybeNotCrypto">'+stockResp.info[0]['exchange']+'</option>');
+
+
+         setTimeout(function(){
+          $('#currencypair').val(theSymbol+'-maybeNotCrypto');
+          $('#exchange').val(stockResp.info[0]['exchange']+'-maybeNotCrypto')
+        },200);
+
+
+      }
+
+      data = stockResp.data;
+
+
+      if(typeof data.status =="string"){
+    alert(data.msg);
+    return;
+}
+    // split the data set into ohlc and volume
+    var ohlc = [],
+        volume = [],
+        dataLength = data.length,
+        // set the allowed units for data grouping
+        groupingUnits = [[
+            'week',                         // unit name
+            [1]                             // allowed multiples
+        ], [
+            'month',
+            [1, 2, 3, 4, 6]
+        ]],
+
+        i = 0;
+
+    for (i; i < dataLength; i += 1) {
+        ohlc.push([
+            data[i][0], // the date
+            data[i][1], // open
+            data[i][2], // high
+            data[i][3], // low
+            data[i][4] // close
+        ]);
+
+        volume.push([
+            data[i][0], // the date
+            data[i][5] // the volume
+        ]);
+    }
+
+
+    // create the chart
+
+
+
+    Highcharts.theme = {
+   colors: ['#2b908f', '#90ee7e', '#f45b5b', '#7798BF', '#aaeeee', '#ff0066', '#eeaaee',
+      '#55BF3B', '#DF5353', '#7798BF', '#aaeeee'],
+   chart: {
+      backgroundColor: "#2f3e47",
+      style: {
+         fontFamily: '\'Unica One\', sans-serif'
+      },
+      plotBorderColor: '#606063'
+   },
+   title: {
+      style: {
+         color: '#E0E0E3',
+         textTransform: 'uppercase',
+         fontSize: '20px'
+      }
+   },
+   subtitle: {
+      style: {
+         color: '#E0E0E3',
+         textTransform: 'uppercase'
+      }
+   },
+   xAxis: {
+      gridLineColor: '#707073',
+      labels: {
+         style: {
+            color: '#E0E0E3'
+         }
+      },
+      lineColor: '#707073',
+      minorGridLineColor: '#505053',
+      tickColor: '#707073',
+      title: {
+         style: {
+            color: '#A0A0A3'
+
+         }
+      }
+   },
+   yAxis: {
+      gridLineColor: '#707073',
+      labels: {
+         style: {
+            color: '#E0E0E3'
+         }
+      },
+      lineColor: '#707073',
+      minorGridLineColor: '#505053',
+      tickColor: '#707073',
+      tickWidth: 1,
+      title: {
+         style: {
+            color: '#A0A0A3'
+         }
+      }
+   },
+   tooltip: {
+      backgroundColor: 'rgba(0, 0, 0, 0.85)',
+      style: {
+         color: '#F0F0F0'
+      }
+   },
+   plotOptions: {
+      series: {
+         dataLabels: {
+            color: '#B0B0B3'
+         },
+         marker: {
+            lineColor: '#333'
+         }
+      },
+      boxplot: {
+         fillColor: '#505053'
+      },
+      candlestick: {
+         lineColor: '#f05050',
+         color: "#f05050",
+         upColor: '#0dc569',
+         upLineColor: "#0dc569"
+      },
+      errorbar: {
+         color: 'white'
+      }
+   },
+   legend: {
+      itemStyle: {
+         color: '#E0E0E3'
+      },
+      itemHoverStyle: {
+         color: '#FFF'
+      },
+      itemHiddenStyle: {
+         color: '#606063'
+      }
+   },
+   credits: {
+      style: {
+         color: '#666'
+      }
+   },
+   labels: {
+      style: {
+         color: '#707073'
+      }
+   },
+
+   drilldown: {
+      activeAxisLabelStyle: {
+         color: '#F0F0F3'
+      },
+      activeDataLabelStyle: {
+         color: '#F0F0F3'
+      }
+   },
+
+   navigation: {
+      buttonOptions: {
+         symbolStroke: '#DDDDDD',
+         theme: {
+            fill: '#505053'
+         }
+      }
+   },
+
+   // scroll charts
+   rangeSelector: {
+      buttonTheme: {
+         fill: '#505053',
+         stroke: '#000000',
+         style: {
+            color: '#CCC'
+         },
+         states: {
+            hover: {
+               fill: '#707073',
+               stroke: '#000000',
+               style: {
+                  color: 'white'
+               }
+            },
+            select: {
+               fill: '#000003',
+               stroke: '#000000',
+               style: {
+                  color: 'white'
+               }
+            }
+         }
+      },
+      inputBoxBorderColor: '#505053',
+      inputStyle: {
+         backgroundColor: '#333',
+         color: 'silver'
+      },
+      labelStyle: {
+         color: 'silver'
+      }
+   },
+
+   navigator: {
+      handles: {
+         backgroundColor: '#666',
+         borderColor: '#AAA'
+      },
+      outlineColor: '#CCC',
+      maskFill: 'rgba(255,255,255,0.1)',
+      series: {
+         color: '#7798BF',
+         lineColor: '#A6C7ED'
+      },
+      xAxis: {
+         gridLineColor: '#505053'
+      }
+   },
+
+   scrollbar: {
+      barBackgroundColor: '#808083',
+      barBorderColor: '#808083',
+      buttonArrowColor: '#CCC',
+      buttonBackgroundColor: '#606063',
+      buttonBorderColor: '#606063',
+      rifleColor: '#FFF',
+      trackBackgroundColor: '#404043',
+      trackBorderColor: '#404043'
+   },
+
+   // special colors for some of the
+   legendBackgroundColor: 'rgba(0, 0, 0, 0.5)',
+   background2: 'red',
+   dataLabelsColor: '#B0B0B3',
+   textColor: '#C0C0C0',
+   contrastTextColor: '#F0F0F3',
+   maskColor: 'rgba(255,255,255,0.3)'
+};
+
+// Apply the theme
+Highcharts.setOptions(Highcharts.theme);
+
+
+    Highcharts.stockChart('container', {
+
+        panning:true,
+
+        rangeSelector: {
+            selected: 1
+        },
+
+        title: {
+            text: stockResp.info[0]['name']+ ' Historical'
+        },
+
+        yAxis: [{
+            labels: {
+                align: 'right',
+                x: -3
+            },
+            title: {
+                text: 'OHLC'
+            },
+            height: '60%',
+            lineWidth: 2,
+            resize: {
+                enabled: true
+            }
+        }, {
+            labels: {
+                align: 'right',
+                x: -3
+            },
+            title: {
+                text: 'Volume'
+            },
+            top: '65%',
+            height: '35%',
+            offset: 0,
+            lineWidth: 2
+        }],
+
+        tooltip: {
+            split: true
+        },
+
+        series: [{
+            type: 'candlestick',
+            name: stockResp.info[0]['symbol'],
+            data: ohlc,
+            dataGrouping: {
+                units: groupingUnits
+            }
+        }, {
+            type: 'column',
+            name: 'Volume',
+            data: volume,
+            yAxis: 1,
+            // upColor:"red"
+            dataGrouping: {
+                units: groupingUnits
+            }
+        }]
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+  })
+}
 
 
  function renderOrderBook(exchange, currencypair){
@@ -199,7 +614,58 @@ function formatNumber(val, chart, precision) {
 
 
 
+function removeResultsListen(){
 
+  $('.content-page, .side-menu, .topbar').on('click', function(){
+
+    $('#resultsContainer').hide();
+
+  });
+   
+
+}
+
+function searchEnter(){
+
+  //TODO, when user presses enter, get the thing that makes sense
+
+}
+function getSuggestedSearch(){
+
+  lastInput = $('#searchInput').val();
+
+  setTimeout(function(){
+
+    //wait til user pauses
+    if(lastInput ==  $('#searchInput').val() && lastInput !='' ){
+
+
+         $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/search.php?query='+$('#searchInput').val(),
+      complete:function(transport){
+
+        theRespResults = $.parseJSON(transport.responseText);
+
+        $('#resultsContainer').html('');
+        for(i in theRespResults){
+
+          $('#resultsContainer').append('<br><a href="javascript:renderNonExchangeAveragePriceMaybeStock(\''+theRespResults[i]['symbol']+'\', \''+theRespResults[i]['name']+'\')">'+theRespResults[i]['name'] +"</a><br><hr>");
+
+        }
+
+        if(justRenderedResults==false){
+          $('#resultsContainer').show('slow');
+        }
+
+        }
+      })
+
+
+
+    }
+  }, 600)
+  
+}
 
 
 
@@ -550,6 +1016,22 @@ function renderSellBuyTD(selector, amount, price){
 function listenForChartUpdate(){
 
     $('#hello select').on("change", function(){
+
+      //if not crypto, do not call this command
+      if($('#currencypair').val().indexOf('maybeNotCrypto') !=-1 || $('#exchange').val().indexOf('maybeNotCrypto') !=-1 ){
+
+          if($('#currencypair').val().indexOf('maybeNotCrypto') !=-1 && $('#exchange').val().indexOf('maybeNotCrypto') !=-1 ){
+
+            renderNonExchangeAveragePriceMaybeStock($('#currencypair').val().split('-maybe')[0]);
+
+          }
+          else{
+            alert("Invalid Ticker/Exchange Pair")
+            return;
+          }
+
+        return;
+      }
         showLoading()
         updateCandleChart();
         updateOrderBook(whichExchange, whichCurrency);
