@@ -2,9 +2,13 @@
     $(document).ready(function(){
                 userAuth();
                 initCandleChart();
+                initNews();
                 listenForChartUpdate();
                 circlesNavActivate();
-
+                getWatchlistCurrencies();
+                getWatchlistCommodities();
+                getWatchlistStocks();
+                getWatchlistIndexes();
                 //for when user clicks out of suggested results
                 removeResultsListen();
 
@@ -16,6 +20,8 @@
 //variable for not flickering the results autocomplete
 justRenderedResults = false;
 function renderNonExchangeAveragePriceMaybeStock(symbol, name){
+
+  getNews(name);
 justRenderedResults = true;
 
 setTimeout(function(){
@@ -612,6 +618,35 @@ function formatNumber(val, chart, precision) {
 
 
 
+function getNews(topic){
+
+   $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/getNews.php?query='+topic,
+      complete:function(transport){
+          theNewsResults = $.parseJSON(transport.responseText);
+          $('#newsStories').html('');
+          $('#latestTitle').html("Latest on "+capitalizeFirstLetter(topic));
+          for(i in theNewsResults){
+            if(theNewsResults[i]['type']=="reddit"){
+              sourceString="Reddit";
+            }
+            else{
+              sourceString="Google News";
+            }
+            newsString = '<div class="" style="overflow-y: hidden; background: transparent;border-bottom: 2px solid #636b6f;"><h4 style="font-weight: lighter;"><a href="'+theNewsResults[i]['url']+'" target="_blank" style="text-decoration:none; color:white">'+theNewsResults[i]['title']+'</a></h4><h5 style="color: grey;">'+theNewsResults[i]['description']+'</h5><h5 style="color: lightgrey;">'+sourceString+'<span style="float:right;">'+theNewsResults[i]['when']+'</span></h5></div>';
+            $('#newsStories').append(newsString);
+
+
+          }
+
+        }
+      })
+
+}
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 
 function removeResultsListen(){
@@ -630,6 +665,133 @@ function searchEnter(){
   //TODO, when user presses enter, get the thing that makes sense
 
 }
+
+
+function getWatchlistCurrencies(){
+
+  
+
+   $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/getCurrencies.php',
+      complete:function(transport){
+          theCurResults = $.parseJSON(transport.responseText);
+
+          $('#currencyTable tbody').html('');
+          for(i in theCurResults){
+            var theChange = parseFloat(theCurResults[i]['percent_change_24h']);
+            if(theChange <0){
+              var changeString= '<span style="color:#7b454b">'+theCurResults[i]['percent_change_24h']+'%</span>';
+            }
+            else{
+              var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
+            }
+            tableTr = ' <tr><th scope="row">'+theCurResults[i]['rank']+'</th> <td>'+theCurResults[i]['symbol']+'</td><td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']))+'</td><td>'+changeString+'</td></tr>';
+             $('#currencyTable tbody').append(tableTr);
+          }
+
+
+
+
+      }
+    });
+
+}
+
+
+function getWatchlistCommodities(){
+
+  
+
+   $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/getCommodities.php',
+      complete:function(transport){
+          theCurResults = $.parseJSON(transport.responseText);
+
+          $('#commodityTable tbody').html('');
+          for(i in theCurResults){
+            var theChange = parseFloat(theCurResults[i]['percent_change_24h']);
+            if(theChange <0){
+              var changeString= '<span style="color:#7b454b">'+theCurResults[i]['percent_change_24h']+'%</span>';
+            }
+            else{
+              var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
+            }
+            tableTr = ' <tr><td>'+theCurResults[i]['symbol']+'</td> <td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']))+'</td><td>'+changeString+'</td><td>'+theCurResults[i]['signal']+'</td></tr>';
+             $('#commodityTable tbody').append(tableTr);
+          }
+
+
+
+
+      }
+    });
+
+}
+
+
+function getWatchlistIndexes(){
+
+  
+
+   $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/getIndexes.php',
+      complete:function(transport){
+          theCurResults = $.parseJSON(transport.responseText);
+
+          $('#indexTable tbody').html('');
+          for(i in theCurResults){
+            var theChange = parseFloat(theCurResults[i]['percent_change_24h']);
+            if(theChange <0){
+              var changeString= '<span style="color:#7b454b">'+theCurResults[i]['percent_change_24h']+'%</span>';
+            }
+            else{
+              var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
+            }
+            tableTr = ' <tr><td>'+theCurResults[i]['symbol']+'</td> <td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']))+'</td><td>'+changeString+'</td><td>'+theCurResults[i]['signal']+'</td></tr>';
+             $('#indexTable tbody').append(tableTr);
+          }
+
+
+
+
+      }
+    });
+
+}
+
+
+function getWatchlistStocks(){
+
+  
+
+   $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/getStocks.php',
+      complete:function(transport){
+          theCurResults = $.parseJSON(transport.responseText);
+
+          $('#stockTable tbody').html('');
+          for(i in theCurResults){
+            var theChange = parseFloat(theCurResults[i]['percent_change_24h']);
+            if(theChange <0){
+              var changeString= '<span style="color:#7b454b">'+theCurResults[i]['percent_change_24h']+'%</span>';
+            }
+            else{
+              var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
+            }
+            tableTr = ' <tr><td>'+theCurResults[i]['symbol']+'</td> <td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']))+'</td><td>'+changeString+'</td><td>'+theCurResults[i]['signal']+'</td></tr>';
+             $('#stockTable tbody').append(tableTr);
+          }
+
+
+
+
+      }
+    });
+
+}
+
+
+
 function getSuggestedSearch(){
 
   lastInput = $('#searchInput').val();
@@ -1036,10 +1198,16 @@ function listenForChartUpdate(){
         updateCandleChart();
         updateOrderBook(whichExchange, whichCurrency);
         getTicker();
+        getNews($('#currencypair').val());
 
     })
 }
 
+  function initNews(){
+     whichCurrency = $('#currencypair').val();
+     getNews(whichCurrency);
+
+  }
 
             function initCandleChart(){
 

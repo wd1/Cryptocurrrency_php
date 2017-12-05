@@ -920,7 +920,147 @@
                         <div >
                             <div id="watchlist" class="card_panel" style="color: #fff;padding:20px;">
                                 <div id="trade-active-orders" class="active-orders" style="display: block;">
-                                    <div class="row">
+
+
+                                  <div class="row">
+                                      <div class="col-xs-12">
+
+                                            <ul class="nav nav-tabs">
+                                                <li role="presentation" class="">
+                                                    <a href="#profile4" role="tab" data-toggle="tab" aria-expanded="false">Index</a>
+                                                </li>
+                                                <li role="presentation" class="active">
+                                                    <a href="#profile1" role="tab" data-toggle="tab" aria-expanded="true">Crypto</a>
+                                                </li>
+
+                                                <li role="presentation" class="">
+                                                    <a href="#profile2" role="tab" data-toggle="tab" aria-expanded="false">CMDTY</a>
+                                                </li>
+                                                 <li role="presentation" class="">
+                                                    <a href="#profile3" role="tab" data-toggle="tab" aria-expanded="false">Equity</a>
+                                                </li>
+
+                                               
+                                            </ul>
+                                            <div class="tab-content  " >
+
+
+
+                                              <div role="tabpanel" class="tab-pane fade in watchListSubDiv nicescroll" id="profile4">
+
+
+                                                  <table class="table table-striped m-0 " id="indexTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Index</th>
+                                             
+                                                <th>Price</th>
+                                                <th>24h Change</th>
+                                                 <th>Signal</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           
+                                        </tbody>
+                                    </table>
+
+                                                </div>
+
+                                                
+                                                <div role="tabpanel" class="tab-pane fade active in watchListSubDiv nicescroll" id="profile1">
+
+
+                                                  <table class="table table-striped m-0 " id="currencyTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Rank</th>
+                                                <th>Symbol</th>
+                                                <th>Price</th>
+                                                <th>24h Change</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           
+                                        </tbody>
+                                    </table>
+
+                                                </div>
+
+
+
+                                                  <div role="tabpanel" class="tab-pane fade in watchListSubDiv nicescroll" id="profile2">
+
+
+                                                  <table class="table table-striped m-0 " id="commodityTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Commodity</th>
+                                             
+                                                <th>Price</th>
+                                                <th>24h Change</th>
+                                                 <th>Signal</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           
+                                        </tbody>
+                                    </table>
+
+                                                </div>
+
+
+                                                  <div role="tabpanel" class="tab-pane fade in watchListSubDiv nicescroll" id="profile3">
+
+
+                                                  <table class="table table-striped m-0 " id="stockTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Stock</th>
+                                             
+                                                <th>Price</th>
+                                                <th>24h Change</th>
+                                                 <th>Signal</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           
+                                        </tbody>
+                                    </table>
+
+                                                </div>
+
+
+                                                  
+
+
+
+
+
+
+
+
+
+
+
+                                              
+
+
+                                                
+                                               
+                                            </div>
+                                        </div><!-- end col -->
+
+
+                                      
+
+                                    </div>
+
+
+
+                                    <!--<div class="row">
                                         <div class="col-xs-12">
                                             <h3>Watchlist &nbsp;&nbsp;
                                                 <input placeholder="Add Symbol" style="width: 40%;
@@ -962,7 +1102,7 @@
                                             </div>
                                             <br>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                             <div class="card_panel" style="color: #fff;padding:20px;margin-top:10px;" >
@@ -977,10 +1117,10 @@
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <h4 style="font-weight: lighter;
-                                                ">Latest on ETHUSD
+                                                " id="latestTitle">Latest on ETHUSD
                                                     
                                                 </h4>
-            
+              <div id="newsStories" class="nicescroll">
                                                 <div class="" style="overflow-y: hidden; background: transparent;border-bottom: 2px solid #636b6f;">
                                                     <h4 style="font-weight: lighter;">µRaiden has now officially been deployed on the Ethereum main net! </h4>
                                                     <h5 style="color: grey;">Raiden – Designed by previous Ethereum Core developer Heiko Hees, Raiden will significantly speed up the Ethereum network by giving the mainnet the ability to take transactions off-chain—a dynamic that’ll allow for private, nearly instantaneous micro-transactions.
@@ -993,6 +1133,7 @@
                                                     </h5>
                                                     <h5 style="color: lightgrey;">at NewBTC<span style="float:right;">20 mins ago</span></h5>
                                                 </div>
+                                              </div>
                                                 <br>
                                             </div>
                                         </div>

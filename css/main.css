@@ -3,6 +3,26 @@ body{
     color:#fff !important;
 }
 
+
+.watchListSubDiv{
+  display:block;
+  max-height:150px;
+  overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+#newsStories{
+display:block;
+  max-height:300px;
+  overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+#watchlist table ::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+
 .card{
      background-color:#253138 !important;
       color:#fff !important;
