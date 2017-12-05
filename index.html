@@ -306,6 +306,12 @@
                 <script src="js/modules/drag-panes.js"></script>
                 <script src="js/modules/exporting.js"></script>
 
+                <!-- Indicators -->
+                <script src="js/modules/indicators/indicators.js"></script>
+                <script src="js/modules/indicators/sma.js"></script>
+                <script src="js/modules/indicators/ema.js"></script>
+                <script src="js/modules/indicators/rsi.js"></script>
+                <script src="js/modules/indicators/atr.js"></script>
 
                 <script src="js/amcharts.js"></script>
                 <script src="https://www.amcharts.com/lib/3/serial.js"></script>
@@ -571,10 +577,18 @@
 
                             </div>
 
-                            <div id="container" style="height: 400px; min-width: 310px"></div>
+                            <div class="chart-wrapper">
+                                <!-- Indicators control -->
+                                <div id="indicators_box" class="chart-indicators">
+                                    <div class="dropdown">
+                                        <div class="dropdown-dark">
+                                            <select id="indicators_control" class="dropdown-select"></select>
+                                        </div>
+                                    </div>
+                                </div>
 
-
-                            
+                                <div id="container" style="height: 400px; min-width: 310px"></div>
+                            </div>
                             <br><br>
 
 
