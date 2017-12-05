@@ -34,6 +34,16 @@ input{
     border-width:0px;
 }
 
+.chart-wrapper {
+  position: relative;
+}
+
+.chart-indicators {
+  position: absolute;
+  z-index: 9;
+  top: 0;
+  left: 10px;
+}
 
 .lightboxes{
     min-width:400px;

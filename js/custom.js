@@ -1,7 +1,28 @@
- 
+
+    /**
+     * Properties
+     */
+    var props = {
+        apiUrl: 'https://stark-island-54204.herokuapp.com/cloud/api/beta/',
+        indicators: {
+            block: $('#indicators_box'),
+            control: $('#indicators_control'),
+            options: [
+                { key: 'sma', value: 'SMA' },
+                { key: 'rsi', value: 'RSI' },
+                { key: 'ema', value: 'EMA' },
+                { key: 'atr', value: 'ATR' }
+            ]
+        },
+        chart: null,
+        seriesVolumeId: 'VOLUME',
+        seriesCandleId: '' // depends on the currency pair value
+    };
+
     $(document).ready(function(){
                 userAuth();
                 initCandleChart();
+                initChartIndicators();
                 initNews();
                 listenForChartUpdate();
                 circlesNavActivate();
@@ -15,7 +36,73 @@
 
             })
 
+    /**
+     * Indicators select box initialization
+     */
+    function initChartIndicators() {
+        var control = props.indicators.control;
 
+        props.indicators.options.forEach(function(item) {
+            var option = $('<option>').attr('value', item.key).text(item.value);
+            control.append(option);
+        });
+
+        control.on('change', onIndicatorsChange);
+    }
+
+    /**
+     * Change handler of the indicators select box
+     */
+    function onIndicatorsChange() {
+        var chart = props.chart,
+            indicators = chart.indicators.allItems,
+            indicatorType = this.value;
+
+        indicators.forEach(function(indicator) {
+            indicator.destroy();
+        });
+
+        var indicator = getIndicator(indicatorType);
+        chart.addIndicator(indicator, true);
+    }
+
+    /**
+     * Get options of a specific indicator by its type
+     * @param {String} type
+     * @return {Object}
+     */
+    function getIndicator(type) {
+        var seriesId = props.seriesVolumeId;
+
+        if (type === 'rsi' || type === 'atr') {
+            seriesId = props.seriesCandleId;
+        }
+
+        var indicator = {
+            id: seriesId,
+            type: type,
+            params: {
+                period: 14,
+                index: 0
+            },
+            styles: {
+                strokeWidth: 1,
+                stroke: 'yellow',
+                dashstyle: 'solid'
+            }
+        };
+
+        if (type === 'rsi' || type === 'atr') {
+            indicator.yAxis = {
+                opposite: true,
+                title: {
+                    x: -10
+                }
+            };
+        }
+
+        return indicator;
+    }
 
 //variable for not flickering the results autocomplete
 justRenderedResults = false;
@@ -853,8 +940,8 @@ function getSuggestedSearch(){
 
 
             function renderCandleChart(exchange, currencypair, period){
-
-
+                // Set candle chart id globally
+                props.seriesCandleId = currencypair;
 
                 $.getJSON('https://stark-island-54204.herokuapp.com/cloud/api/beta/'+exchange+'.php?currencypair='+currencypair+"&period="+period, function (data) {
 console.log(data)
@@ -866,7 +953,6 @@ if(typeof data.status =="string"){
     // split the data set into ohlc and volume
     var ohlc = [],
         volume = [],
-        dataLength = data.length,
         // set the allowed units for data grouping
         groupingUnits = [[
             'week',                         // unit name
@@ -874,24 +960,34 @@ if(typeof data.status =="string"){
         ], [
             'month',
             [1, 2, 3, 4, 6]
-        ]],
+        ]];
 
-        i = 0;
+    data.forEach(function(item) {
+        var itemDate = item[0],
+            itemOpen = item[1],
+            itemHigh = item[2],
+            itemLow = item[3],
+            itemClose = item[4],
+            itemVolume = item[5];
 
-    for (i; i < dataLength; i += 1) {
-        ohlc.push([
-            data[i][0], // the date
-            data[i][1], // open
-            data[i][2], // high
-            data[i][3], // low
-            data[i][4] // close
-        ]);
+        var isRising = (itemClose > itemOpen),
+            itemColor = isRising ? '#00D66F' : '#F83922';
 
-        volume.push([
-            data[i][0], // the date
-            data[i][5] // the volume
-        ]);
-    }
+        ohlc.push({
+            x: itemDate,
+            open: itemOpen,
+            high: itemHigh,
+            low: itemLow,
+            close: itemClose,
+            color: itemColor
+        });
+
+        volume.push({
+            x: itemDate,
+            y: itemVolume,
+            color: itemColor
+        });
+    });
 
 
     // create the chart
@@ -974,10 +1070,10 @@ if(typeof data.status =="string"){
          fillColor: '#505053'
       },
       candlestick: {
-         lineColor: '#f05050',
-         color: "#f05050",
-         upColor: '#0dc569',
-         upLineColor: "#0dc569"
+         lineColor: '#F83922',
+         color: "#F83922",
+         upColor: '#00D66F',
+         upLineColor: "#00D66F"
       },
       errorbar: {
          color: 'white'
@@ -1098,7 +1194,7 @@ if(typeof data.status =="string"){
 Highcharts.setOptions(Highcharts.theme);
 
 
-    Highcharts.stockChart('container', {
+    props.chart = Highcharts.stockChart('container', {
 
         panning:true,
 
@@ -1138,26 +1234,41 @@ Highcharts.setOptions(Highcharts.theme);
         }],
 
         tooltip: {
-            split: true
+            split: true,
+            enabledIndicators: true
         },
 
         series: [{
+            id: props.seriesCandleId,
             type: 'candlestick',
             name: currencypair,
             data: ohlc,
             dataGrouping: {
-                units: groupingUnits
+                units: groupingUnits,
+                enabled: false
             }
         }, {
+            id: props.seriesVolumeId,
             type: 'column',
             name: 'Volume',
             data: volume,
             yAxis: 1,
             // upColor:"red"
             dataGrouping: {
-                units: groupingUnits
+                units: groupingUnits,
+                enabled: false
             }
-        }]
+        }],
+
+        indicators: [
+            getIndicator(props.indicators.options[0].key)
+        ],
+
+        chart: {
+            events: {
+                redraw: onChartRedraw
+            }
+        }
     });
 });
 
@@ -1166,8 +1277,25 @@ Highcharts.setOptions(Highcharts.theme);
 
             }
 
+    /**
+     * Handling chart redraw event
+     */
+    function onChartRedraw() {
+        var yAxisWithResizer = this.yAxis.find(function(item) {
+            return item.resizer;
+        });
 
+        if (!yAxisWithResizer) {
+            return;
+        }
 
+        var resizer = yAxisWithResizer.resizer,
+            topIndent = 20,
+            topPos = resizer.lastPos + topIndent;
+
+        // Set position of indicators control
+        props.indicators.block.css({ top: topPos });
+    }
 
 function renderSellBuyTD(selector, amount, price){
 
