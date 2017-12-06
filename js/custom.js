@@ -110,6 +110,7 @@ function renderNonExchangeAveragePriceMaybeStock(symbol, name){
 
 
   getNews(name);
+  $('.symbol1').html(symbol.toUpperCase());
 justRenderedResults = true;
 
 setTimeout(function(){
@@ -1449,7 +1450,7 @@ else{
         $('.checkout-bar li').removeClass( 'active');
         $(this).addClass('active');
       $('#mockOrders').hide();
-      $('#hello, #container').show('slow');
+      $('#hello, #container, #indicators_box').show('slow');
     })
 
 
@@ -1460,7 +1461,7 @@ else{
       $('#mockOrders').show('slow');
       $('#hello, #container').hide();
       $('.mockButton').show();
-      $('.realButton').hide();
+      $('.realButton, #indicators_box').hide();
     })
 
 
@@ -1470,7 +1471,7 @@ else{
            $(this).addClass('active');
       $('#mockOrders').show('slow');
       $('#hello, #container').hide();
-      $('.mockButton').hide();
+      $('.mockButton, #indicators_box').hide();
       $('.realButton').show();
     })
 
