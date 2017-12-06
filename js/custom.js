@@ -108,6 +108,7 @@
 justRenderedResults = false;
 function renderNonExchangeAveragePriceMaybeStock(symbol, name){
 
+
   getNews(name);
 justRenderedResults = true;
 
@@ -193,6 +194,11 @@ $('#resultsContainer').hide();
     alert(data.msg);
     return;
 }
+
+      $('#tickerCurrency').html(stockResp.info[0]['symbol']);
+      $('#tickerPrice').html("$"+stockResp.data[(data.length-1)][4])
+      $('#chartdiv').hide();
+
     // split the data set into ohlc and volume
     var ohlc = [],
         volume = [],
@@ -531,7 +537,7 @@ Highcharts.setOptions(Highcharts.theme);
     //https://poloniex.com/public?command=returnOrderBook&currencyPair=USDT_ETH&depth=50
     "url": "https://stark-island-54204.herokuapp.com/cloud/api/beta/order"+whichExchange+".php?currencypair="+currencypair,
     "format": "json",
-    "reload": 30,
+    "reload": 600,
     "postProcess": function(data) {
       rData = data;
       
@@ -772,7 +778,7 @@ function getWatchlistCurrencies(){
             else{
               var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
             }
-            tableTr = ' <tr><th scope="row">'+theCurResults[i]['rank']+'</th> <td>'+theCurResults[i]['symbol']+'</td><td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']))+'</td><td>'+changeString+'</td></tr>';
+            tableTr = ' <tr><th scope="row">'+theCurResults[i]['rank']+'</th> <td>'+theCurResults[i]['symbol']+'</td><td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']).toFixed(2))+'</td><td>'+changeString+'</td></tr>';
              $('#currencyTable tbody').append(tableTr);
           }
 
@@ -803,7 +809,7 @@ function getWatchlistCommodities(){
             else{
               var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
             }
-            tableTr = ' <tr><td>'+theCurResults[i]['symbol']+'</td> <td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']))+'</td><td>'+changeString+'</td><td>'+theCurResults[i]['signal']+'</td></tr>';
+            tableTr = ' <tr><td>'+theCurResults[i]['symbol']+'</td> <td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']).toFixed(2))+'</td><td>'+changeString+'</td><td>'+theCurResults[i]['signal']+'</td></tr>';
              $('#commodityTable tbody').append(tableTr);
           }
 
@@ -834,7 +840,7 @@ function getWatchlistIndexes(){
             else{
               var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
             }
-            tableTr = ' <tr><td>'+theCurResults[i]['symbol']+'</td> <td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']))+'</td><td>'+changeString+'</td><td>'+theCurResults[i]['signal']+'</td></tr>';
+            tableTr = ' <tr><td>'+theCurResults[i]['symbol']+'</td> <td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']).toFixed(2))+'</td><td>'+changeString+'</td><td>'+theCurResults[i]['signal']+'</td></tr>';
              $('#indexTable tbody').append(tableTr);
           }
 
@@ -865,7 +871,7 @@ function getWatchlistStocks(){
             else{
               var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
             }
-            tableTr = ' <tr><td>'+theCurResults[i]['symbol']+'</td> <td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']))+'</td><td>'+changeString+'</td><td>'+theCurResults[i]['signal']+'</td></tr>';
+            tableTr = ' <tr><td>'+theCurResults[i]['symbol']+'</td> <td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']).toFixed(2))+'</td><td>'+changeString+'</td><td>'+theCurResults[i]['signal']+'</td></tr>';
              $('#stockTable tbody').append(tableTr);
           }
 
@@ -950,6 +956,8 @@ if(typeof data.status =="string"){
     alert(data.msg);
     return;
 }
+
+$('#chartdiv').show();
     // split the data set into ohlc and volume
     var ohlc = [],
         volume = [],
@@ -1385,13 +1393,39 @@ else{
            $('#userBalance').html("$"+ numberWithCommas(parseFloat(theResp.balanceInfo['totalAssets']).toFixed(2)));
           $('#signer').html("<a href='javascript:logout()' style='font-size:12px;opacity:.8;text-decoration:none; color:#fff'>Logout</>");
           $('#signer2').hide();
+
+
         }
         else{
           localStorage.setItem('oauth', theResp.user[0]['oauth']);
 
           $('#userBalance').html("$"+ numberWithCommas(parseFloat(theResp.balanceInfo['totalAssets']).toFixed(2)));
           
+          
         }
+
+         $('.fiatAmount').html("$"+numberWithCommas(theResp.balanceInfo['USDBalance'].toFixed(2)));
+           $('.portfolioValue').html("$"+numberWithCommas(theResp.balanceInfo['totalAssets'].toFixed(2)));
+           assetValue = theResp.balanceInfo['totalAssets'].toFixed(2) - theResp.balanceInfo['USDBalance'].toFixed(2);
+          assetValue =  assetValue.toFixed(2);
+           $('.assetsAmount').html("$"+numberWithCommas(assetValue));
+           $('.assetsChange').html(theResp.balanceInfo['totalReturn'].toFixed(2) +"%");
+
+           for(i in theResp.balanceInfo['cryptocurrencies']){
+
+              oTRSting = ' <tr style="font-weight: 600;color:white;"><td style="width:30%;">'+i.toUpperCase().split('-')[0]+'</td> <td style="width:25%;" class="numberedVar">'+theResp.balanceInfo['cryptocurrencies'][i]+' ($'+(theResp.balanceInfo['cryptoPrices'][i] *theResp.balanceInfo['cryptocurrencies'][i]).toFixed(2) +')</td><td style="font-size: 11px;text-align:center;font-weight: normal;width:15%;color:#15a661;">--%</td><td style="font-size: 11px;text-align:center;font-weight: normal;width:15%;color:#15a661;">--%</td><td style="font-size: 11px;text-align:center;font-weight: normal;width:15%;color:#15a661;" class="numberedVar">'+theResp.balanceInfo['equityGains'][i].toFixed(2)+'%</td></tr>';
+              $('.portfolioStats').append(oTRSting )
+
+           }
+
+           setTimeout(function(){
+            $('.numberedVar').each(function(){
+             
+              if($(this).html().indexOf('-')!=-1){
+                $(this).css('color', 'red')
+              }
+            })
+           }, 500)
 
         if(typeof theResp['orders'] == "object"){
           for(i in theResp['orders']){

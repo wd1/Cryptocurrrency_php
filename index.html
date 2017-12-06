@@ -842,84 +842,45 @@
                             <div id="trade-active-orders" class="active-orders" style="display: block;">
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <h3>Portfolio &nbsp;&nbsp;<span style="font-size:30px;"> $30.0501</span></h3>
+                                        <h3>Mock Portfolio &nbsp;&nbsp;<span style="font-size:30px;" class="portfolioValue numberedVar"> $30.0501</span></h3>
     
                                         <div class="container" style="overflow-y: hidden; background: transparent;">
                                             <table id="orders" class="table table-bordered">
                                                 <thead style="border-bottom: 2px solid #636b6f;">
                                                     <tr>
                                                         <th style="width:30%;">Portfolio Value</th>
-                                                        <th style="width:25%;">$30,0501</th>
+                                                        <th style="width:25%;" class="portfolioValue numberedVar">$30,0501</th>
                                                         <th style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;">Chg,$1D</th>
+                                                        font-weight: normal;width:15%;">Chg % 1D</th>
                                                         <th style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;">Chg,$7D</th>
+                                                        font-weight: normal;width:15%;">Chg % $7D</th>
                                                         <th style="font-size: 11px;text-align:center;
                                                         font-weight: normal;width:15%;">Total Gains</th>
                                                     </tr>
                                                 </thead>
                                        
-                                                <tbody id="orders-tbody">
+                                                <tbody id="orders-tbody" class="portfolioStats">
                                                     <tr style="font-weight: 600;color:white;">
                                                         <td style="width:30%;">Fiat</td>
-                                                        <td style="width:25%;">$10,501</td>
+                                                        <td style="width:25%;" class="fiatAmount numberedVar">$10,501</td>
                                                         <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">4.34%</td>
+                                                        font-weight: normal;width:15%;color:#15a661;">0%</td>
                                                         <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">3.34%</td>
+                                                        font-weight: normal;width:15%;color:#15a661;">0%</td>
                                                         <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">1.23%</td>
+                                                        font-weight: normal;width:15%;color:#15a661;" >0%</td>
                                                     </tr>
                                                     <tr style="font-weight: 600;color:white;border-bottom: 2px solid #636b6f;">
-                                                        <td style="width:30%;">Crypto</td>
-                                                        <td style="width:25%;">$20,000</td>
+                                                        <td style="width:30%;">Assets</td>
+                                                        <td style="width:25%;" class="assetsAmount numberedVar">$20,000</td>
                                                         <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">3.45%</td>
+                                                        font-weight: normal;width:15%;color:#15a661;">--</td>
                                                         <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">23.43%</td>
+                                                        font-weight: normal;width:15%;color:#15a661;">--</td>
                                                         <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">118.23%</td>
+                                                        font-weight: normal;width:15%;color:#15a661;" class="assetsChange">0%</td>
                                                     </tr>
-                                                    <tr style="font-weight: 600;color:white;">
-                                                        <td style="width:30%;">Bitcoin</td>
-                                                        <td style="width:25%;">1.2BTC(9,000USD)</td>
-                                                        <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">1.12%</td>
-                                                        <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">3.34%</td>
-                                                        <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">56.34%</td>
-                                                    </tr>
-                                                    <tr style="font-weight: 600;color:white;">
-                                                        <td style="width:30%;">Ether</td>
-                                                        <td style="width:25%;">10 ETH(4,700USD)</td>
-                                                        <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">50.43%</td>
-                                                        <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">23.34%</td>
-                                                        <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">80.43%</td>
-                                                    </tr>
-                                                    <tr style="font-weight: 600;color:white;">
-                                                        <td style="width:30%;">Dubai Marina Tokens</td>
-                                                        <td style="width:25%;">5(1,000USD)</td>
-                                                        <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#7b454b;">3.44%</td>
-                                                        <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">1.23%</td>
-                                                        <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#7b454b;">0.32%</td>
-                                                    </tr>
-                                                    <tr style="font-weight: 600;color:white;">
-                                                        <td style="width:30%;">TaaS</td>
-                                                        <td style="width:25%;">50(50USD)</td>
-                                                        <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">1.12%</td>
-                                                        <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">3.34%</td>
-                                                        <td style="font-size: 11px;text-align:center;
-                                                        font-weight: normal;width:15%;color:#15a661;">56.34%</td>
-                                                    </tr>
+                                                   
                                                 </tbody>
                                             </table>
                                             <div id="orders-loading" style="display: none;"></div>
