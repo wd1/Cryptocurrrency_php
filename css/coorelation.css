@@ -1,0 +1,44 @@
+
+
+.containerLoadCoor {
+
+      position: absolute;
+      top:150px;
+
+      bottom: 0;
+      left: -360px;
+      right: 0;
+      width: 250px;
+      height: 250px;
+      margin: auto;
+}
+
+.part {
+  width: 300px;
+  position: absolute;
+}
+
+.svgpath {
+  fill: rgba(145,220,90,0);
+  stroke: aqua;
+  stroke-width: 1.5px;
+  stroke-dasharray: 1000;
+  stroke-linecap: round;
+  z-index: 2;
+}
+
+.svgbg {
+  fill: rgba(255,255,255,0.2);
+  z-index: 1;
+ }
+
+#playload {
+  animation: dash 2.5s reverse ease-in-out infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 2000;
+  }
+}
+

@@ -905,7 +905,7 @@ function getSuggestedSearch(){
         $('#resultsContainer').html('');
         for(i in theRespResults){
 
-          $('#resultsContainer').append('<br><a href="javascript:renderNonExchangeAveragePriceMaybeStock(\''+theRespResults[i]['symbol']+'\', \''+theRespResults[i]['name']+'\')">'+theRespResults[i]['name'] +"</a><br><hr>");
+          $('#resultsContainer').append('<br><a href="javascript:renderNonExchangeAveragePriceMaybeStock(\''+theRespResults[i]['symbol']+'\', \''+theRespResults[i]['name']+'\')" link="'+theRespResults[i]['symbol']+'">'+theRespResults[i]['name'] +"</a><br><hr>");
 
         }
 
