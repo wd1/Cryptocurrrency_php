@@ -334,7 +334,17 @@
 
 
 
+ <div id="descSection" style="height:auto; padding:50px; background-color:#253138; font-size:23px; text-align:center; color:white; " class="lity-hide lightboxes col-md-4">
 
+                  <span id="descName"></span><span> Overview </span>
+                 <br><br>
+                 <div id="descDesc" style="color:white; max-width: 320px; width:320px; max-height:300px; height:300px; overflow-y: scroll;font-size:15px; text-align:left; padding:20px">
+                     
+
+                 </div>
+
+                   
+    </div>
                 
                 
                 <div id="signupForm" style="height:auto; padding:50px; background-color:#253138; font-size:23px; text-align:center; color:white; " class="lity-hide lightboxes col-md-4">
@@ -604,11 +614,88 @@
 
                       
 
-<div class="alert alert-info">
-                                                 <strong>Coorelation Data (Last 30 Days)</strong><br><span style="font-size:11px">(1= Directly Coorelated. -1 = Indirectly Coorelated)</span>
+<div class="alert alert-info" style="height:auto !important">
+                                                <strong>Coorelation Data (Last 30 Days)</strong><br><span style="font-size:11px">(1= Directly Coorelated. -1 = Indirectly Coorelated)</span>
+
+
+                                               <span style="float:right; margin-top:10px; margin-bottom:10px; margin-right:10px">
+                                                   
+                                                    Period:
+                                                   <select id="coorPeriod">
+                                                        <option value="15 minutes" >
+                                                        15 Minutely
+                                                       </option>
+                                                        <option value="1 hour" >
+                                                        Hourly
+                                                       </option>
+
+                                                       <option value="1 day" selected>
+                                                        Daily
+                                                       </option>
+
+                                                       <option value="1 month" >
+                                                        Monthly
+                                                       </option>
+                                                   </select>
+                                               </span>
+
+
+
+                                                <div style="float:right; margin-top:10px; margin-bottom:10px; margin-right:10px" class="cryptoCats">
+                                                   
+                                                    Category:
+                                                   <select>
+                                                        <option value="rising stars" >
+                                                        Rising Stars
+                                                       </option>
+                                                        <option value="bitcoin clones" >
+                                                        Bitcoin Clones
+                                                       </option>
+
+                                                       <option value="top cryptos" selected>
+                                                        Top Cryptos
+                                                       </option>
+
+                                                       <option value="top tokens" >
+                                                        Top Tokens
+                                                       </option>
+                                                   </select>
+                                               </div>
+
+
+                                                <div style="float:right; margin-top:10px; margin-bottom:10px; margin-right:10px; display:none" class="traditionalCats">
+                                                   
+                                                    Category:
+                                                   <select>
+                                                        <option value="1 day" >
+                                                        Top Currencies
+                                                       </option>
+                                                        <option value="1 day" >
+                                                        Top Commodities
+                                                       </option>
+
+                                                       <option value="1 day" selected>
+                                                        General (Mixed)
+                                                       </option>
+
+                                                       <option value="1 day" >
+                                                        Top Indexes
+                                                       </option>
+                                                   </select>
+                                               </div>
+
+
+
                                             </div>
 
+<!-- coorelation chart -->
 
+<div id="containerCoor" style="height: 400px; min-width: 310px; display:none"></div>
+
+
+
+
+<!-- end coorelation chart -->
 
    <div style="position:absolute;  background: transparent; width:100%; text-align:center; z-index:10; display:none" id="coorLoad" >
 
@@ -1323,8 +1410,15 @@
 
         </div>
         <!-- END wrapper -->
+<link rel="stylesheet" href="css/newsreel.css">
 
+<script src="js/tickerNews.js"></script>
+<div class="ticker-wrap">
 
+<p class="marquee"><span></span></p>
+ 
+
+</div>
 
         <script>
             var resizefunc = [];

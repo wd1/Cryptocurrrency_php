@@ -108,7 +108,7 @@
 justRenderedResults = false;
 function renderNonExchangeAveragePriceMaybeStock(symbol, name){
 
-
+// ---
   getNews(name);
   $('.symbol1').html(symbol.toUpperCase());
 justRenderedResults = true;
@@ -122,8 +122,22 @@ $('#resultsContainer').hide();
   thePeriod = $('#period').val();
   showLoading();
 
+
+  chartRequestUrl = 'https://stark-island-54204.herokuapp.com/cloud/api/beta/getStockChart.php';
+
+  if(symbol.indexOf('USD') !=-1){
+    symbol= symbol.split('USD')[0].split('/USD')[0];
+
+    
+     chartRequestUrl = 'https://stark-island-54204.herokuapp.com/cloud/api/beta/getCryptoUnpopular.php';
+
+ 
+
+
+  }
+
   $.ajax({
-    url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/getStockChart.php',
+    url:chartRequestUrl,
     data:{'symbol':symbol, 'period':thePeriod},
 
     complete:function(transport){
@@ -755,10 +769,43 @@ function removeResultsListen(){
 }
 
 function searchEnter(){
+  
+searchTerm = $('#searchInput').val().toUpperCase()
+  switch(searchTerm){
 
+    case "DES":
+    justRenderedResults = true;
+      $('#resultsContainer').hide();
+      $('#searchInput').val(searchTerm)
+     
+      setTimeout(function(){
+          justRenderedResults = false;
+
+      },4000)
+
+      getDesc();
+    break;
+    default:
+    console.log('no commend')
+    break;
+  }
   //TODO, when user presses enter, get the thing that makes sense
 
 }
+
+function getDesc(){
+   lity('#descSection');
+     $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/getDesc.php?symbol='+$('#currencypair').val().split('USD')[0],
+      complete:function(transport){
+          descResults= $.parseJSON(transport.responseText);
+          $('#descDesc').html(descResults['data']['description']);
+          $('#descName').html(descResults['data']['currencyName']);
+         
+
+}
+})
+   }
 
 
 function getWatchlistCurrencies(){
@@ -904,9 +951,15 @@ function getSuggestedSearch(){
 
         $('#resultsContainer').html('');
         for(i in theRespResults){
+          if(typeof theRespResults[i]['exec'] == "string"){
+             $('#resultsContainer').append('<br><b><a href="javascript:'+theRespResults[i]['exec']+'" link="'+theRespResults[i]['symbol']+'">'+theRespResults[i]['name'] +"</a></b><br><hr>");
 
-          $('#resultsContainer').append('<br><a href="javascript:renderNonExchangeAveragePriceMaybeStock(\''+theRespResults[i]['symbol']+'\', \''+theRespResults[i]['name']+'\')" link="'+theRespResults[i]['symbol']+'">'+theRespResults[i]['name'] +"</a><br><hr>");
+          }
+          else{
+            $('#resultsContainer').append('<br><a href="javascript:renderNonExchangeAveragePriceMaybeStock(\''+theRespResults[i]['symbol']+'\', \''+theRespResults[i]['name']+'\')" link="'+theRespResults[i]['symbol']+'">'+theRespResults[i]['name'] +"</a><br><hr>");
 
+          }
+          
         }
 
         if(justRenderedResults==false){
@@ -949,6 +1002,8 @@ function getSuggestedSearch(){
             function renderCandleChart(exchange, currencypair, period){
                 // Set candle chart id globally
                 props.seriesCandleId = currencypair;
+
+               
 
                 $.getJSON('https://stark-island-54204.herokuapp.com/cloud/api/beta/'+exchange+'.php?currencypair='+currencypair+"&period="+period, function (data) {
 console.log(data)
