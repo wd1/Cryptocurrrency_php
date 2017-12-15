@@ -106,8 +106,25 @@
 
 //variable for not flickering the results autocomplete
 justRenderedResults = false;
-function renderNonExchangeAveragePriceMaybeStock(symbol, name){
 
+
+function clickedOnCrypto(whichCrypto, whichCryptoName){
+  //sidepanel
+
+   renderNonExchangeAveragePriceMaybeStock(whichCrypto+"USD", whichCryptoName);
+
+}
+
+
+function clickOnCommodityIndex(whichComm, whichCommName){
+   renderNonExchangeAveragePriceMaybeStock(whichComm, whichCommName);
+
+}
+
+
+function renderNonExchangeAveragePriceMaybeStock(symbol, name){
+$('#indicators_box').hide();
+$('#containerCoor').hide();
 // ---
   getNews(name);
   $('.symbol1').html(symbol.toUpperCase());
@@ -124,16 +141,28 @@ $('#resultsContainer').hide();
 
 
   chartRequestUrl = 'https://stark-island-54204.herokuapp.com/cloud/api/beta/getStockChart.php';
+      $('.traditionalCats').show();
+       $('.cryptoCats').hide();
 
   if(symbol.indexOf('USD') !=-1){
     symbol= symbol.split('USD')[0].split('/USD')[0];
 
-    
+        $('.traditionalCats').hide();
+       $('.cryptoCats').show();
      chartRequestUrl = 'https://stark-island-54204.herokuapp.com/cloud/api/beta/getCryptoUnpopular.php';
 
  
 
 
+  }
+
+  if(symbol.indexOf('/') !=-1 || symbol.indexOf('Future') !=-1 || symbol.indexOf('(') !=-1   ){
+
+
+    $('.traditionalCats').show();
+       $('.cryptoCats').hide();
+       symbol= symbol.split(' (')[0];
+     chartRequestUrl = 'https://stark-island-54204.herokuapp.com/cloud/api/beta/getIndexFuturesChart.php';
   }
 
   $.ajax({
@@ -201,6 +230,9 @@ $('#resultsContainer').hide();
 
 
       }
+
+
+      getCorr();
 
       data = stockResp.data;
 
@@ -826,7 +858,7 @@ function getWatchlistCurrencies(){
             else{
               var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
             }
-            tableTr = ' <tr><th scope="row">'+theCurResults[i]['rank']+'</th> <td>'+theCurResults[i]['symbol']+'</td><td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']).toFixed(2))+'</td><td>'+changeString+'</td></tr>';
+            tableTr = ' <tr><th scope="row">'+theCurResults[i]['rank']+'</th> <td><a href="javascript:clickedOnCrypto(\''+theCurResults[i]['symbol']+'\', \''+theCurResults[i]['name']+'\')" style="text-decoration:non; color:white">'+theCurResults[i]['symbol']+'</a></td><td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']).toFixed(2))+'</td><td>'+changeString+'</td></tr>';
              $('#currencyTable tbody').append(tableTr);
           }
 
@@ -857,7 +889,7 @@ function getWatchlistCommodities(){
             else{
               var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
             }
-            tableTr = ' <tr><td>'+theCurResults[i]['symbol']+'</td> <td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']).toFixed(2))+'</td><td>'+changeString+'</td><td>'+theCurResults[i]['signal']+'</td></tr>';
+            tableTr = ' <tr><td><a href="javascript:clickOnCommodityIndex(\''+theCurResults[i]['symbol']+'\', \''+theCurResults[i]['symbol']+'\')" style="text-decoration:none; color:white">'+theCurResults[i]['symbol']+'</a></td> <td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']).toFixed(2))+'</td><td>'+changeString+'</td><td>'+theCurResults[i]['signal']+'</td></tr>';
              $('#commodityTable tbody').append(tableTr);
           }
 
@@ -888,7 +920,7 @@ function getWatchlistIndexes(){
             else{
               var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
             }
-            tableTr = ' <tr><td>'+theCurResults[i]['symbol']+'</td> <td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']).toFixed(2))+'</td><td>'+changeString+'</td><td>'+theCurResults[i]['signal']+'</td></tr>';
+            tableTr = ' <tr><td><a href="javascript:clickOnCommodityIndex(\''+theCurResults[i]['symbol']+'\', \''+theCurResults[i]['symbol']+'\')" style="text-decoration:none; color:white">'+theCurResults[i]['symbol']+'</a></td> <td>$'+numberWithCommas(parseFloat(theCurResults[i]['price_usd']).toFixed(2))+'</td><td>'+changeString+'</td><td>'+theCurResults[i]['signal']+'</td></tr>';
              $('#indexTable tbody').append(tableTr);
           }
 
@@ -1001,6 +1033,12 @@ function getSuggestedSearch(){
 
             function renderCandleChart(exchange, currencypair, period){
                 // Set candle chart id globally
+
+                $('.traditionalCats').hide();
+       $('.cryptoCats').show();
+
+
+                $('#indicators_box').show();
                 props.seriesCandleId = currencypair;
 
                
@@ -1371,6 +1409,9 @@ function listenForChartUpdate(){
 
     $('#hello select').on("change", function(){
 
+
+      $('#coorContainer').hide();
+
       //if not crypto, do not call this command
       if($('#currencypair').val().indexOf('maybeNotCrypto') !=-1 || $('#exchange').val().indexOf('maybeNotCrypto') !=-1 ){
 
@@ -1380,7 +1421,7 @@ function listenForChartUpdate(){
 
           }
           else{
-            alert("Invalid Ticker/Exchange Pair")
+            lity('#alertMsg')
             return;
           }
 
@@ -1506,6 +1547,8 @@ else{
         $(this).addClass('active');
       $('#mockOrders').hide();
       $('#hello, #container, #indicators_box').show('slow');
+
+      $('#coorContainer1').show()
     })
 
 
@@ -1517,6 +1560,8 @@ else{
       $('#hello, #container').hide();
       $('.mockButton').show();
       $('.realButton, #indicators_box').hide();
+
+       $('#coorContainer1').hide()
     })
 
 
@@ -1528,9 +1573,17 @@ else{
       $('#hello, #container').hide();
       $('.mockButton, #indicators_box').hide();
       $('.realButton').show();
+
+       $('#coorContainer1').hide()
     })
 
 
+  }
+
+
+  function comingSoon(){
+
+    lity('#comingSoon')
   }
 
 

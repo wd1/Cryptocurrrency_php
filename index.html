@@ -154,33 +154,33 @@
                             <li class="text-muted menu-title">Navigation</li>
 
                             <li>
-                                <a href="index.html" class="waves-effect"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
+                                <a href="#" class="waves-effect"><i class="zmdi zmdi-view-dashboard"></i> <span> Dashboard </span> </a>
                             </li>
 
                             <li>
-                                <a href="#" class="waves-effect"><i class="zmdi zmdi-chart"></i> <span> Portfolio </span> </a>
+                                <a href="javascript:comingSoon()" class="waves-effect"><i class="zmdi zmdi-chart"></i> <span> Portfolio </span> </a>
                             </li>
 
                                <li>
-                                <a href="#" class="waves-effect"><i class="zmdi zmdi-search"></i> <span> Search / Commands </span> </a>
+                                <a href="javascript:comingSoon()" class="waves-effect"><i class="zmdi zmdi-search"></i> <span> Search / Commands </span> </a>
                             </li>
 
 
 
                             <li>
-                                <a href="#" class="waves-effect"><i class="zmdi zmdi-accounts-alt"></i> <span> Colleagues </span> </a>
+                                <a href="javascript:comingSoon()" class="waves-effect"><i class="zmdi zmdi-accounts-alt"></i> <span> Colleagues </span> </a>
                             </li>
 
                              <li>
-                                <a href="#" class="waves-effect"><i class="zmdi zmdi-comments"></i> <span> Topic Chat </span> </a>
+                                <a href="javascript:comingSoon()" class="waves-effect"><i class="zmdi zmdi-comments"></i> <span> Topic Chat </span> </a>
                             </li>
 
                               <li>
-                                <a href="#" class="waves-effect"><i class="zmdi zmdi-comment"></i> <span> Messenger </span> </a>
+                                <a href="javascript:comingSoon()" class="waves-effect"><i class="zmdi zmdi-comment"></i> <span> Messenger </span> </a>
                             </li>
 
                              <li>
-                                <a href="#" class="waves-effect"><i class="zmdi zmdi-settings"></i> <span> Settings</span> </a>
+                                <a href="javascript:comingSoon()" class="waves-effect"><i class="zmdi zmdi-settings"></i> <span> Settings</span> </a>
                             </li>
 
                             <!--
@@ -330,6 +330,18 @@
 
 
 
+ <div id="comingSoon" style="height:auto; padding:50px; background-color:#253138; font-size:23px; text-align:center; color:white; " class="lity-hide lightboxes col-md-4">
+
+    This feature is coming soon. We would love your feedback on the Telegram on how to make this awesome.
+
+</div>
+
+
+ <div id="alertMsg" style="height:auto; padding:50px; background-color:#253138; font-size:23px; text-align:center; color:white; " class="lity-hide lightboxes col-md-4">
+
+    Whoops. Invalid Ticker/Exchange Pair.
+
+</div>
 
 
 
@@ -610,7 +622,7 @@
 
 
 
-<div class="container">
+<div class="container" id="coorContainer1">
 
                       
 
@@ -690,14 +702,7 @@
 
 <!-- coorelation chart -->
 
-<div id="containerCoor" style="height: 400px; min-width: 310px; display:none"></div>
-
-
-
-
-<!-- end coorelation chart -->
-
-   <div style="position:absolute;  background: transparent; width:100%; text-align:center; z-index:10; display:none" id="coorLoad" >
+  <div style="position:absolute;  background: transparent; width:100%; text-align:center; z-index:10; display:none" id="coorLoad" >
 
                       <div class='containerLoadCoor'>
   <svg class='part' x="0px" y="0px" viewBox="0 0 256 256" style="enable-background:new 0 0 256 256;" xml:space="preserve">
@@ -713,6 +718,15 @@
   </svg>
 </div>
 </div>
+
+<div id="containerCoor" style="height: 400px; min-width: 310px; display:none"></div>
+
+
+
+
+<!-- end coorelation chart -->
+
+ 
                        
 
 
@@ -1117,9 +1131,9 @@
                                                 <li role="presentation" class="">
                                                     <a href="#profile2" role="tab" data-toggle="tab" aria-expanded="false">CMDTY</a>
                                                 </li>
-                                                 <li role="presentation" class="">
+                                               <!--  <li role="presentation" class="">
                                                     <a href="#profile3" role="tab" data-toggle="tab" aria-expanded="false">Equity</a>
-                                                </li>
+                                                </li>-->
 
                                                
                                             </ul>

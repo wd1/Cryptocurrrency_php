@@ -8,12 +8,10 @@ function getCorr(theCurrencyC){
 
 try{
 if($('#currencypair').val().indexOf('-maybe') !=-1 && $('#exchange').val().indexOf('--') ==-1){
-    $('.traditionalCats').show();
-       $('.cryptoCats').hide();
+
 }
 else{
-    $('.traditionalCats').hide();
-       $('.cryptoCats').show();
+  
 }
 }
 
@@ -125,13 +123,13 @@ $('body').on('click', '#resultsContainer a', function (){
 
 
 $('.cryptoCats select').on('change', function(){
-
+  $('#containerCoor').hide();
     getCorr(coorCur);
 })
 
 
 $('#coorPeriod').on('change', function(){
-
+   $('#containerCoor').hide();
     getCorr(coorCur);
 })
 
