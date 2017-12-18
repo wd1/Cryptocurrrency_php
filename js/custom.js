@@ -20,6 +20,7 @@
     };
 
     $(document).ready(function(){
+      earlyAccessStopper()
                 userAuth();
                 initCandleChart();
                 initChartIndicators();
@@ -32,6 +33,11 @@
                 getWatchlistIndexes();
                 //for when user clicks out of suggested results
                 removeResultsListen();
+                timerController()
+                howLongStay()
+                checkMobile();
+
+                mixT('Loaded Site');
 
 
             })
@@ -64,6 +70,46 @@
 
         var indicator = getIndicator(indicatorType);
         chart.addIndicator(indicator, true);
+    }
+
+    function checkMobile(){
+
+      if(localStorage.getItem('earlyAccess')!='hello'){
+        return;
+      }
+      if(screen.width < 800){
+
+        lity('#notIdeal');
+
+      }
+    }
+
+    function proceedAnyway(){
+      $('.lity-close').click()
+    }
+
+    function howLongStay(){
+
+
+      setTimeout(function(){
+        mixT('stayed 30 seconds')
+      }, 30000)
+
+       setTimeout(function(){
+        mixT('stayed 2 mins')
+      }, 120000)
+
+
+        setTimeout(function(){
+        mixT('stayed 10 mins')
+      }, 600000)
+
+
+
+
+        setTimeout(function(){
+        mixT('stayed 30 mins')
+      }, 1800000)
     }
 
     /**
@@ -104,6 +150,34 @@
         return indicator;
     }
 
+
+function earlyAccessStopper(){
+
+if(localStorage.getItem('earlyAccess') != "hello"){
+   lity('#alphaForm');
+  $('.lity-close').hide()
+}
+ 
+}
+
+function checkAccessCode(){
+
+  //yes, its not that hard to bypass :)
+
+  if($('#alphaCode').val().toLowerCase() != 'prft0218'){
+    alert("Invalid Access Code");
+    mixT('invalid access code')
+
+  }else{
+     $('.lity-close').show()
+     $('.lity-close').click()
+     localStorage.setItem('earlyAccess', 'hello')
+     mixT('got access')
+     checkMobile();
+  }
+
+ 
+}
 //variable for not flickering the results autocomplete
 justRenderedResults = false;
 
@@ -116,15 +190,47 @@ function clickedOnCrypto(whichCrypto, whichCryptoName){
 }
 
 
+
 function clickOnCommodityIndex(whichComm, whichCommName){
    renderNonExchangeAveragePriceMaybeStock(whichComm, whichCommName);
 
 }
 
+function timerController(timedArr){
+  timedCalls = [{"function":"getTicker", "time":50}, {"function":"getNews", "time":1800}, {"function":"getTickerNews", "time":3600},{"function":"getWatchlistCurrencies", "time":300} ]
 
+  for(i in timedCalls){
+    setTimer(timedCalls[i])
+  }
+}
+
+function setTimer(timerElem){
+
+    setTimeout( callAndResetTimer, timerElem["time"]*1000, timerElem["function"], timerElem["time"]);
+}
+
+function callAndResetTimer(functionName, theTime){
+  eval(functionName +"()");
+  setTimer({"time":theTime, "function":functionName})
+}
+
+function mixT(userAction){
+  try{
+    mixpanel.track(userAction);
+  }
+  catch(e){
+    console.log('could not log mixp')
+  }
+  
+}
+
+
+
+chartRequestUrl="";
 function renderNonExchangeAveragePriceMaybeStock(symbol, name){
 $('#indicators_box').hide();
 $('#containerCoor').hide();
+
 // ---
   getNews(name);
   $('.symbol1').html(symbol.toUpperCase());
@@ -150,7 +256,7 @@ $('#resultsContainer').hide();
         $('.traditionalCats').hide();
        $('.cryptoCats').show();
      chartRequestUrl = 'https://stark-island-54204.herokuapp.com/cloud/api/beta/getCryptoUnpopular.php';
-
+     mixT('viewed non exchange crypto')
  
 
 
@@ -163,6 +269,7 @@ $('#resultsContainer').hide();
        $('.cryptoCats').hide();
        symbol= symbol.split(' (')[0];
      chartRequestUrl = 'https://stark-island-54204.herokuapp.com/cloud/api/beta/getIndexFuturesChart.php';
+     mixT('clicked or searched index/future')
   }
 
   $.ajax({
@@ -196,7 +303,7 @@ $('#resultsContainer').hide();
 
       currencyExists=false;
       $('#currencypair option').each(function(){
-        if($(this).val().indexOf(symbol) != -1){
+        if($(this).val()==symbol){
           console.log('yaaaa');
 
           currencyExists = true;
@@ -215,8 +322,13 @@ $('#resultsContainer').hide();
         }
       })
 
+
+
       if(currencyExists==false){
 
+        if(chartRequestUrl.indexOf('getIndexFuturesChart')!=-1){
+          theSymbol = stockResp['info'][0]['symbol'];
+        }
         $('#currencypair').append('<option value="'+theSymbol+'-maybeNotCrypto">'+theSymbol+'</option>');
         
 
@@ -232,9 +344,18 @@ $('#resultsContainer').hide();
       }
 
 
-      getCorr();
+      //getCorr();
 
-      data = stockResp.data;
+
+      setTimeout(function(){
+          if(chartRequestUrl.indexOf('getCryptoUnpopular') !=-1 || chartRequestUrl.indexOf('getIndexFuturesChart')!=-1){
+      
+            getCorr();
+          }
+      }, 250)
+
+
+      data = stockResp.data.slice(-70);
 
 
       if(typeof data.status =="string"){
@@ -760,6 +881,9 @@ function formatNumber(val, chart, precision) {
 
 function getNews(topic){
 
+$('#whatOn').html(topic);
+getMarketCapInfo(topic);
+ getRecommendInfo(topic);
    $.ajax({
       url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/getNews.php?query='+topic,
       complete:function(transport){
@@ -825,6 +949,14 @@ searchTerm = $('#searchInput').val().toUpperCase()
 
 }
 
+
+function scrollToNews(){
+
+  $('html, body').animate({
+        scrollTop: $("#newsStories").offset().top-80
+    }, 1000);
+}
+
 function getDesc(){
    lity('#descSection');
      $.ajax({
@@ -837,6 +969,8 @@ function getDesc(){
 
 }
 })
+
+     mixT('got description of asset')
    }
 
 
@@ -853,7 +987,7 @@ function getWatchlistCurrencies(){
           for(i in theCurResults){
             var theChange = parseFloat(theCurResults[i]['percent_change_24h']);
             if(theChange <0){
-              var changeString= '<span style="color:#7b454b">'+theCurResults[i]['percent_change_24h']+'%</span>';
+              var changeString= '<span style="color:#f05050">'+theCurResults[i]['percent_change_24h']+'%</span>';
             }
             else{
               var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
@@ -884,7 +1018,7 @@ function getWatchlistCommodities(){
           for(i in theCurResults){
             var theChange = parseFloat(theCurResults[i]['percent_change_24h']);
             if(theChange <0){
-              var changeString= '<span style="color:#7b454b">'+theCurResults[i]['percent_change_24h']+'%</span>';
+              var changeString= '<span style="color:#f05050">'+theCurResults[i]['percent_change_24h']+'%</span>';
             }
             else{
               var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
@@ -915,7 +1049,7 @@ function getWatchlistIndexes(){
           for(i in theCurResults){
             var theChange = parseFloat(theCurResults[i]['percent_change_24h']);
             if(theChange <0){
-              var changeString= '<span style="color:#7b454b">'+theCurResults[i]['percent_change_24h']+'%</span>';
+              var changeString= '<span style="color:#f05050">'+theCurResults[i]['percent_change_24h']+'%</span>';
             }
             else{
               var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
@@ -946,7 +1080,7 @@ function getWatchlistStocks(){
           for(i in theCurResults){
             var theChange = parseFloat(theCurResults[i]['percent_change_24h']);
             if(theChange <0){
-              var changeString= '<span style="color:#7b454b">'+theCurResults[i]['percent_change_24h']+'%</span>';
+              var changeString= '<span style="color:#f05050">'+theCurResults[i]['percent_change_24h']+'%</span>';
             }
             else{
               var changeString= '<span style="color:#15a661">'+theCurResults[i]['percent_change_24h']+'%</span>';
@@ -974,6 +1108,8 @@ function getSuggestedSearch(){
     //wait til user pauses
     if(lastInput ==  $('#searchInput').val() && lastInput !='' ){
 
+      
+mixT('User searched');
 
          $.ajax({
       url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/search.php?query='+$('#searchInput').val(),
@@ -1011,7 +1147,9 @@ function getSuggestedSearch(){
 
 
  function placeOrder(){
-
+      
+      
+mixT('attempted to place real order')
             alert("Real Orders coming soon. You will be able to add your authentication keys here, store them locally, and the orders will be placed and appear in your real balance above in the nav bar, next to your mock balances.");
           }
             function updateCandleChart(){
@@ -1371,7 +1509,7 @@ Highcharts.setOptions(Highcharts.theme);
                 redraw: onChartRedraw
             }
         }
-    });
+    } );
 });
 
 
@@ -1383,6 +1521,8 @@ Highcharts.setOptions(Highcharts.theme);
      * Handling chart redraw event
      */
     function onChartRedraw() {
+
+
         var yAxisWithResizer = this.yAxis.find(function(item) {
             return item.resizer;
         });
@@ -1410,7 +1550,7 @@ function listenForChartUpdate(){
     $('#hello select').on("change", function(){
 
 
-      $('#coorContainer').hide();
+      $('#containerCoor').hide();
 
       //if not crypto, do not call this command
       if($('#currencypair').val().indexOf('maybeNotCrypto') !=-1 || $('#exchange').val().indexOf('maybeNotCrypto') !=-1 ){
@@ -1562,6 +1702,7 @@ else{
       $('.realButton, #indicators_box').hide();
 
        $('#coorContainer1').hide()
+       mixT('visited mock order screen')
     })
 
 
@@ -1575,6 +1716,7 @@ else{
       $('.realButton').show();
 
        $('#coorContainer1').hide()
+       mixT('visted real order screen')
     })
 
 
@@ -1588,12 +1730,108 @@ else{
 
 
 
-  function getTicker(theCurrencyPair){
+function getRecommendInfo(theSymbolName){
+  recommendSymbol = theSymbolName;
+     $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/getRecommendations.php',
+      data:{
+        'symbol' : theSymbolName.split('-')[0]
+      },
+      method:"POST",
+      complete:function(transport){
 
+        theRespRecommend = $.parseJSON(transport.responseText);
+        
+        if(theRespRecommend ['info']['summary']==0){
+          $('#tradeRecommend').hide();
+        }
+        else{
+           $('#tradeRecommend').show();
+           $('#recSec1').html(theRespRecommend ['info']['html']);
+          
+
+        }
+      }
+    })
+  }
+
+
+  function recUpdate(periodAsk){
+
+    $('#recNav li').removeClass('active');
+   $('#recSec1').html('Loading...');
+     $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/getRecommendations.php',
+      data:{
+        'symbol' :   recommendSymbol ,
+        'period': periodAsk
+      },
+      method:"POST",
+      complete:function(transport){
+
+        theRespRecommend = $.parseJSON(transport.responseText);
+        
+        if(theRespRecommend ['info']['summary']==0){
+          $('#tradeRecommend').hide();
+        }
+        else{
+           $('#tradeRecommend').show();
+           $('#recSec1').html(theRespRecommend ['info']['html']);
+          
+
+        }
+      }
+    })
+
+     mixT('updated recommend screen')
+  }
+
+
+
+
+
+  function launchRecommendInfo(){
+
+     lity('#recSection');
+     mixT('viewed recommend screen')
+
+  }
+
+
+
+  function getMarketCapInfo(theSymbolName){
+
+
+
+     $.ajax({
+      url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/getMarketData.php',
+      data:{
+        'symbol' : theSymbolName.split('-')[0]
+      },
+      method:"POST",
+      complete:function(transport){
+
+        theRespMarket = $.parseJSON(transport.responseText);
+        
+        if(theRespMarket['marketCap']==0){
+          $('#cryptoDetails').hide();
+        }
+        else{
+           $('#cryptoDetails').show();
+           $('#marketCap').html("$"+ numberWithCommas(theRespMarket['marketCap'].toFixed(0)));
+       $('#percOfMarket').html(( theRespMarket['percentageOfTotal'] *100).toFixed(3)+"%");
+
+        }
+      }
+    })
+  }
+
+  function getTicker(theCurrencyPair){
+     // getMarketCapInfo();
       $.ajax({
       url:'https://stark-island-54204.herokuapp.com/cloud/api/beta/ticker.php',
       data:{
-        'currencypair' : $('#currencypair').val()
+        'currencypair' : $('#currencypair').val(), 'exchange':$('#exchange').val()
       },
       method:"POST",
       complete:function(transport){
@@ -1811,6 +2049,7 @@ else{
           }
       })
   }
+
 
 
 

@@ -88,7 +88,12 @@ ul.checkout-bar li:before {
   text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
   top: 4px;
   width: 35px;
-  z-index: 999;
+  z-index: 20;
+  /*
+
+
+  wtf
+  */
 }
 ul.checkout-bar li.active {
   color: #71b6f9;
@@ -96,12 +101,12 @@ ul.checkout-bar li.active {
 }
 ul.checkout-bar li.active:before {
   background: #71b6f9;
-  z-index: 99999;
+  z-index: 20;
 }
 ul.checkout-bar li.visited {
   background: #ECECEC;
   color: #57aed1;
-  z-index: 99999;
+  z-index: 20;
 }
 ul.checkout-bar li.visited:before {
   /* background: #1e73be; */

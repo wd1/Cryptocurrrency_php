@@ -50,6 +50,20 @@ catch(err){
 
             for(i in coorResp){
 
+              /*
+               if( chartRequestUrl == 'https://stark-island-54204.herokuapp.com/cloud/api/beta/getStockChart.php' ){
+                  //back wards
+                  console.log('stock/com pair')
+
+                  if(coorResp[i]['coorelation'] <0){
+                    coorResp[i]['coorelation'] = coorResp[i]['coorelation']+1;
+                  }
+                  else{
+                     coorResp[i]['coorelation'] = coorResp[i]['coorelation']-1;
+                  }
+                }
+*/
+
                 if(coorResp[i]['coorelation'] >.8){
                     //light blue
                     backColor = '#04B5FC';

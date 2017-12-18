@@ -5,11 +5,20 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="x-squared project">
-        <meta name="author" content="Coderthemes">
+        <meta name="author" content="proof">
 
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        <link rel="shortcut icon" href="favicon.ico">
 
         <title>x²</title>
+
+
+<meta property="og:title" content="x² Project" />
+<meta property="og:description" content="Research project in early alpha testing. Crypto, Stock, Index and Commodity Quotes, Charts, News & Analysis " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://x2.proofsuite.com" />
+<meta property="og:image" content="images/screen1.png" />
+
+
 
         <!--Morris Chart CSS -->
         <link rel="stylesheet" href="assets/plugins/morris/morris.css">
@@ -357,8 +366,91 @@
 
                    
     </div>
+
+
+    <div id="recSection" style="max-height:400px; overflow:scroll; width: 80%; max-width:80%; padding:50px; background-color:#253138; font-size:14px; text-align:center; color:white; " class="lity-hide lightboxes col-md-4">
+        
+        <ul class="nav nav-tabs" style="margin-bottom:40px" id="recNav">
+                                                <li role="presentation1" class="">
+                                                    <a href="javascript:recUpdate('15 minutes')" role="tab" >15-Minutely</a>
+                                                </li>
+                                                <li role="presentation1" class="active">
+                                                    <a href="javascript:recUpdate('1 hour')" role="tab" >Hourly</a>
+                                                </li>
+
+                                                <li role="presentation1" class="">
+                                                    <a href="javascript:recUpdate('1 day')" role="tab">Daily</a>
+                                                </li>
+
+                                                 <li role="presentation1" class="">
+                                                    <a href="javascript:recUpdate('1 week')" role="tab" >Weekly</a>
+                                                </li>
+
+                                               
+                                               <!--  <li role="presentation" class="">
+                                                    <a href="#profile3" role="tab" data-toggle="tab" aria-expanded="false">Equity</a>
+                                                </li>-->
+
+                                               
+                                            </ul>
+
+
+
+
+        <div id="recSec1">
+
+
+        </div>
+
+   
+
+
+                
+
+                   
+    </div>
                 
                 
+
+                 <div id="alphaForm" style="height:auto; padding:50px; background-color:#253138; font-size:23px; text-align:center; color:white; " class="lity-hide lightboxes col-md-4">
+
+                 This project is in early alpha. This means we are constantly adding new features and fixing bugs. 
+                    <br><br>
+                    <form action="javascript:checkAccessCode()">
+                    <input type="text" id="alphaCode" placeholder="Pass Code" style="border-width: 0px;
+                    background: #475e6b !important;
+                    border: 1px solid #2f3e47;
+                    padding: 10px;
+                    border-radius: 5px;
+                    font-size: 14px;    width: 100%;
+                    ">
+                  
+                  
+                    <button type="button" onclick="checkAccessCode()" class="btn btn-block" style="background-color: #5a8fc2;border: 1px solid #5a8fc2;">Get Access</button>
+
+                </form>
+                   
+                   
+                </div>
+
+
+                <div id="notIdeal" style="height:auto; padding:50px; background-color:#253138; font-size:18px; text-align:center; color:white; " class="lity-hide lightboxes col-md-4">
+
+                <b>Warning</b><br>This experience is not optimized yet for mobile devices. We highly recommend that you use a Desktop when testing this project for full features and a much better experience.
+                    <br><br>
+                   
+                    
+                  
+                  
+                    <button type="button" onclick="proceedAnyway()" class="btn btn-block" style="background-color: #5a8fc2;border: 1px solid #5a8fc2;">Proceed Anyway</button>
+
+           
+                   
+                   
+                </div>
+
+
+
                 <div id="signupForm" style="height:auto; padding:50px; background-color:#253138; font-size:23px; text-align:center; color:white; " class="lity-hide lightboxes col-md-4">
 
                   Register
@@ -395,8 +487,8 @@
                     </div>
                     <button type="button" onclick="register()" class="btn btn-block" style="background-color: #5a8fc2;border: 1px solid #5a8fc2;">Sign Up</button>
                     <br>
-                    <h6>or sign up with</h6>
-                    <div class="card-footer p-4">
+                   <!-- <h6>or sign up with</h6>-->
+                    <div class="card-footer p-4" style="display:none">
                         <div class="row">
                             <div class="col-sm-6" style="border-right: 1px solid white;">
                                 <div>
@@ -422,7 +514,7 @@
 
                   Log In
                     <br><br>
-                    <div class="card-footer p-4">
+                    <div class="card-footer p-4" style="display:none">
                             <div class="row">
                                 <div class="col-sm-6" style="border-right: 1px solid white;">
                                     <div>
@@ -492,8 +584,18 @@
                     <div class=" col-md-8" style="">
                         <div class="card_panel" style="padding-left: 20px;
                         padding-top: 15px;">
-                            <h3>Overview </h3>
-                            <div id="hello" class="container" style="text-align:center; padding:20px; font-size:10px; margin-top:10px">
+                            <h3 id="whatOn">Overview </h3>
+
+                            
+                            <span id="detailsNews">
+                            <span id="descriptionOfIt" style="font-size:13px"><a href="javascript:getDesc()" style="color:white">Description</a></span> |
+                            <span id="newsOfIt" style="font-size:13px"><a href="javascript:scrollToNews()" style="color:white">News</a></span>
+
+
+                            <span id="tradeRecommend" style="font-size:13px"> | <a href="javascript:launchRecommendInfo()" style="color:white">Trade Recommendations</a></span>
+
+                            </span>
+                            <div id="hello"  class="container" style="text-align:center; padding:20px; font-size:10px; margin-top:10px">
                                 
                             <div class="row">
                             <div class="col-sm-4">
@@ -552,8 +654,20 @@
                                 <option value="BCHUSD">BCH / USD</option>
                                 <option value="ETCUSD">ETC / USD</option>
                                 <option value="LTCUSD">LTC / USD</option>
-                                    <option value="ETCUSD" disabled>XRP / USD</option>
-                                    <option value="ETCUSD" disabled>DASH / USD</option>
+                                    <option value="XRPUSD" >XRP / USD</option>
+                                      <option value="ZECUSD" >ZEC / USD</option>
+                                      <!--  <option value="XRMUSD" >XMR / USD</option>-->
+                                      <option value="EOSUSD" >EOS / USD</option>
+                                          <option value="OMGUSD" >OMG / USD</option>
+                                            <option value="NEOUSD" >NEO / USD</option>
+                                              <option value="ETPUSD" >ETP / USD</option>
+                                                <option value="EDOUSD" >EDO / USD</option>
+                                                  <option value="BTGUSD" >BTG / USD</option>
+                                                    <option value="DATAUSD" >DATA / USD</option>
+
+
+
+                                   <!-- <option value="ETCUSD" disabled>DASH / USD</option>
                                             <option value="ETCUSD" disabled>NEO / USD</option>
                                                 <option value="ETCUSD" disabled>IOTA / USD</option>
                                                 <option value="ETCUSD" disabled>MON / USD</option>
@@ -564,7 +678,7 @@
                                                     <option value="ETCUSD" disabled>TAAS / USD</option>
                                                     <option value="ETCUSD" disabled>0X / USD</option>
                                                             <option value="ETCUSD" disabled>STRJ/ USD</option>
-                            
+                            -->
                             </select>
                             </div>
                             </div>
@@ -627,7 +741,7 @@
                       
 
 <div class="alert alert-info" style="height:auto !important">
-                                                <strong>Coorelation Data (Last 30 Days)</strong><br><span style="font-size:11px">(1= Directly Coorelated. -1 = Indirectly Coorelated)</span>
+                                                <strong>Correlation Data (Last 30 Days)</strong><br><span style="font-size:11px">(1= Directly Correlated. -1 = Indirectly Correlated)</span>
 
 
                                                <span style="float:right; margin-top:10px; margin-bottom:10px; margin-right:10px">
@@ -1302,8 +1416,15 @@
                             </div>
                             <div class="card_panel" style="color: #fff;padding:20px;margin-top:10px;" >
                                 <h3 style="font-weight: lighter;
-                                "><span id="tickerCurrency">Ethereum</span>/Dollar<br><span id="tickerPrice">480.43</span><span style="font-size: 13px;text-align:center; display:none;
+                                "><span id="tickerCurrency">Ethereum</span>/Dollar<br><span id="tickerPrice"></span><span style="font-size: 13px;text-align:center; display:none;
                                 font-weight: normal;width:15%;color:#15a661;">&nbsp;<br>1 hour change: <span id="tickerChange">5.23%</span></span></h3>
+
+                                <span id="cryptoDetails" style="margin-top:10px; margin-bottom">
+                                <span id="marketCapDes">Market Cap: </span><span id="marketCap"></span><br>
+                                 <span id="percofMarketDes">% of Crypto Market: </span><span id="percOfMarket"></span>
+
+
+                                </span>
                                 <div id="chartdiv" style="color: #fff;margin-top:10px;"></div>
                             </div>
                             
@@ -1468,4 +1589,9 @@
         <script src="assets/js/jquery.app.js"></script>
 
     </body>
+
+    <!-- start Mixpanel --><script type="text/javascript">(function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.unset people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+mixpanel.init("f468ceb3715657c585ce6129126bc5e0");</script><!-- end Mixpanel -->
 </html>
