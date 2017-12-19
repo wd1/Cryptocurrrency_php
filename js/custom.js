@@ -36,7 +36,9 @@
                 timerController()
                 howLongStay()
                 checkMobile();
-
+                tradeOrderTotalsListen()
+                initList();
+                initHideNewsReel()
                 mixT('Loaded Site');
 
 
@@ -231,6 +233,10 @@ function renderNonExchangeAveragePriceMaybeStock(symbol, name){
 $('#indicators_box').hide();
 $('#containerCoor').hide();
 
+
+$('#tradeTotal').hide()
+$('#tradeTotal1').hide()
+
 // ---
   getNews(name);
   $('.symbol1').html(symbol.toUpperCase());
@@ -249,6 +255,7 @@ $('#resultsContainer').hide();
   chartRequestUrl = 'https://stark-island-54204.herokuapp.com/cloud/api/beta/getStockChart.php';
       $('.traditionalCats').show();
        $('.cryptoCats').hide();
+         $('#cryptoStats').hide()
 
   if(symbol.indexOf('USD') !=-1){
     symbol= symbol.split('USD')[0].split('/USD')[0];
@@ -257,7 +264,7 @@ $('#resultsContainer').hide();
        $('.cryptoCats').show();
      chartRequestUrl = 'https://stark-island-54204.herokuapp.com/cloud/api/beta/getCryptoUnpopular.php';
      mixT('viewed non exchange crypto')
- 
+    $('#cryptoStats').show()
 
 
   }
@@ -269,6 +276,7 @@ $('#resultsContainer').hide();
        $('.cryptoCats').hide();
        symbol= symbol.split(' (')[0];
      chartRequestUrl = 'https://stark-island-54204.herokuapp.com/cloud/api/beta/getIndexFuturesChart.php';
+       $('#cryptoStats').hide()
      mixT('clicked or searched index/future')
   }
 
@@ -365,6 +373,11 @@ $('#resultsContainer').hide();
 
       $('#tickerCurrency').html(stockResp.info[0]['symbol']);
       $('#tickerPrice').html("$"+stockResp.data[(data.length-1)][4])
+
+
+              $('#buyPrice').val(parseFloat(stockResp.data[(data.length-1)][4]).toFixed(2));
+        $('#sellPrice').val(parseFloat(stockResp.data[(data.length-1)][4]).toFixed(2));
+
       $('#chartdiv').hide();
 
     // split the data set into ohlc and volume
@@ -955,6 +968,27 @@ function scrollToNews(){
   $('html, body').animate({
         scrollTop: $("#newsStories").offset().top-80
     }, 1000);
+
+    mixT('clicked my news')
+}
+
+function goToNotes(){
+
+  $('html, body').animate({
+        scrollTop: $(".notesSec").offset().top
+    }, 1000);
+
+
+
+  mixT('clicked my notes')
+}
+
+function goToCoor(){
+   $('html, body').animate({
+        scrollTop: $("#coorContainer1").offset().top
+    }, 1000);
+     mixT('clicked correlations')
+  
 }
 
 function getDesc(){
@@ -1174,6 +1208,9 @@ mixT('attempted to place real order')
 
                 $('.traditionalCats').hide();
        $('.cryptoCats').show();
+
+       $('#tradeTotal').hide()
+$('#tradeTotal1').hide()
 
 
                 $('#indicators_box').show();
@@ -1818,12 +1855,63 @@ function getRecommendInfo(theSymbolName){
         }
         else{
            $('#cryptoDetails').show();
+
+globalCap =theRespMarket['globalCap'].toFixed(2);
+
+if(theRespMarket['coinChange'] <0){
+  $('#coinChange').html( "("+theRespMarket['coinChange'] +"%)").css({'color':'#f05050'});
+}
+else{
+   $('#coinChange').html( "("+theRespMarket['coinChange'] +"%)").css({'color':'#15a661'});
+}
+
+           $('#cryptoCap').html("$"+ borm(globalCap));
+           
+           $('#cryptoVol').html("$" +borm(theRespMarket['daysVolume'] ));
+           $('#globalVol').html("$" +borm(theRespMarket['globalVolume'] ));
+           $('#theCryptoCap').html("$"+ borm(theRespMarket['marketCap']))
            $('#marketCap').html("$"+ numberWithCommas(theRespMarket['marketCap'].toFixed(0)));
        $('#percOfMarket').html(( theRespMarket['percentageOfTotal'] *100).toFixed(3)+"%");
 
         }
       }
     })
+  }
+
+
+  function tradeOrderTotalsListen(){
+
+
+
+    $('#buyAmount').on('keyup', function(){
+
+      if(isNaN(parseFloat($(this).val())) || isNaN( parseFloat($('#buyPrice').val()))){
+        return;
+      }
+
+      totalAmount = parseFloat($(this).val()) * parseFloat($('#buyPrice').val());
+          $('#tradeTotal').show()
+$('#tradeTotal1').show()
+
+      $('#tradeTotal').html('$'+totalAmount)
+    })
+
+
+    $('#buyAmount').on('keyup', function(){
+
+      if(isNaN(parseFloat($(this).val())) || isNaN( parseFloat($('#sellPrice').val()))){
+        return;
+      }
+
+
+      $('#tradeTotal').show()
+$('#tradeTotal1').show()
+      totalAmount = parseFloat($(this).val()) * parseFloat($('#sellPrice').val());
+
+      $('#tradeTotal1').html('$'+totalAmount)
+    })
+
+
   }
 
   function getTicker(theCurrencyPair){
@@ -1838,6 +1926,11 @@ function getRecommendInfo(theSymbolName){
 
         theRespPair = $.parseJSON(transport.responseText);
         $('#tickerPrice').html(numberWithCommas(parseFloat(theRespPair['ticker']['price']).toFixed(2)));
+                $('#buyPrice').val(theRespPair['ticker']['price'].toFixed(2));
+        $('#sellPrice').val(theRespPair['ticker']['price'].toFixed(2));
+
+
+
         amountChanged =parseFloat(theRespPair['ticker']['change']);
         percentageChanged = amountChanged/parseFloat(theRespPair['ticker']['price']);
         $('#tickerChange').html( percentageChanged.toFixed(2)+"%");
@@ -2033,13 +2126,13 @@ function getRecommendInfo(theSymbolName){
              $('#userBalance').html("$"+ numberWithCommas(theResp1.balanceInfo['totalAssets'].toFixed(2)));
 
              if(theResp1['filledStatus']=="filled"){
-              alert("Order has been instantly filled ");
+              lity('#instantlyFilled')
 
              }
              else{
 
               renderActiveOrders(theResp1['data']['rId'], theResp1['data']['timestamp'], theResp1['data']['type'], theResp1['data']['amount'], theResp1['data']['price'], theResp1['data']['symbol']);
-              alert("Your order is now active. Once the market reaches your offer, it will be filled. You can view your order or cancel it below in 'Active Orders'.");
+              lity('#pendingOrder');
 
 
              }
@@ -2050,6 +2143,116 @@ function getRecommendInfo(theSymbolName){
       })
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  function initList(){
+  
+  var list = document.querySelector('#list1'),
+      form = document.querySelector('#form1'),
+      item = document.querySelector('#item');
+  
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    list.innerHTML += '<li>' + item.value + '</li>';
+    store();
+    item.value = "";
+
+    mixT('added note')
+  },false)
+  
+  list.addEventListener('click',function(e){
+    var t = e.target;
+    if(t.classList.contains('checked')){
+      t.parentNode.removeChild(t);
+        mixT('removed note')
+    } else {
+      t.classList.add('checked');
+        mixT('checked note')
+    }
+    store();
+  },false)
+  
+  function store() {
+    window.localStorage.myitems = list.innerHTML;
+  }
+  
+  function getValues() {
+    var storedValues = window.localStorage.myitems;
+    if(!storedValues) {
+      list.innerHTML = '<li>This is an example note</li>'+
+                       '<li>You can add, check or remove these</li>';
+                      
+    }
+    else {
+      list.innerHTML = storedValues;
+    }
+  }
+  getValues();
+}
+
+
+
+
+function borm (labelValue) {
+
+    // Nine Zeroes for Billions
+    return Math.abs(Number(labelValue)) >= 1.0e+9
+
+    ? (Math.abs(Number(labelValue)) / 1.0e+9).toFixed(2) + "B"
+    // Six Zeroes for Millions 
+    : Math.abs(Number(labelValue)) >= 1.0e+6
+
+    ? (Math.abs(Number(labelValue)) / 1.0e+6).toFixed(2) + "M"
+    // Three Zeroes for Thousands
+    : Math.abs(Number(labelValue)) >= 1.0e+3
+
+    ? (Math.abs(Number(labelValue)) / 1.0e+3).toFixed(2) + "K"
+
+    : (Math.abs(Number(labelValue))).toFixed(2);
+
+}
+
+
+function initHideNewsReel(){
+  $('.marquee').on('mouseover', function(){
+
+    $('#hideNewsReel').show();
+  })
+
+  $('#hideNewsReel').on('click', function(){
+   
+     $('.marquee').hide()
+  })
+
+   $('#hideNewsReel').on('mouseout', function(){
+
+    $('#hideNewsReel').hide();
+  })
+
+     $('.container').on('click', function(){
+
+    $('#hideNewsReel').hide();
+  })
+
+
+
+}
 
 
 

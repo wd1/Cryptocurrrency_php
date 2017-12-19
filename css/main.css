@@ -533,3 +533,82 @@ ul.checkout-bar a {
     -webkit-animation-delay: .45s;
     animation-delay: .45s
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.notesSec input {
+  border: none;
+  display: block;
+  width: 98.4%;
+  line-height: 1.5;
+  padding: 8px 0 8px 10px;
+  border-bottom: 1px solid #cfcbcc;
+  outline: 0;
+}
+
+.notesSec h1, .notesSec h2 {
+  text-align: center;
+  margin-bottom: 0px;
+  line-height: 1;
+}
+
+.notesSec h2 {
+  color: gray;
+}
+
+.notesSec ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.notesSec ul li {
+  color: #899098;
+  font-weight: 400;
+  border-bottom: 1px solid #cfcbcc;
+  line-height: 1.5;
+  padding: 8px 0;
+}
+.notesSec ul li:before {
+  content: "\25A1";
+  padding: 10px 10px;
+  font-size: 20px;
+}
+.notesSec ul li:hover {
+  text-decoration: line-through;
+  cursor: pointer;
+}
+.notesSec ul li:last-child {
+  border-bottom: none;
+}
+
+.notesSec .checked {
+  color: green;
+}
+.notesSec .checked:before {
+  content: "\2713";
+  padding: 10px 10px;
+  font-size: 20px;
+}
+ .notesSec .checked:hover {
+  text-decoration: none;
+}
+.notesSec .checked:hover:after {
+  content: "(remove)";
+  color: tomato;
+  text-align: right;
+}

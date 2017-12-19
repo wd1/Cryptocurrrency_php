@@ -346,6 +346,19 @@
 </div>
 
 
+ <div id="instantlyFilled" style="height:auto; padding:50px; background-color:#253138; font-size:23px; text-align:center; color:white; " class="lity-hide lightboxes col-md-4">
+
+    Order has been instantly filled 
+
+</div>
+
+ <div id="pendingOrder" style="height:auto; padding:50px; background-color:#253138; font-size:23px; text-align:center; color:white; " class="lity-hide lightboxes col-md-4">
+
+    Your order is now active. Once the market reaches your offer, it will be filled. You can view your order or cancel it below in 'Active Orders'.
+
+</div>
+
+
  <div id="alertMsg" style="height:auto; padding:50px; background-color:#253138; font-size:23px; text-align:center; color:white; " class="lity-hide lightboxes col-md-4">
 
     Whoops. Invalid Ticker/Exchange Pair.
@@ -473,12 +486,7 @@
                     ">
                     <br>
                     <input type="password" id="signupPw" style="border-width: 0px;
-                    background: #475e6b !important;
-                    border: 1px solid #2f3e47;
-                    padding: 10px;
-                    border-radius: 5px;
-                    font-size: 14px;    width: 100%;
-                    "placeholder="Password">
+                    background: #475e6b !important; border: 1px solid #2f3e47;padding: 10px; border-radius: 5px;font-size: 14px;    width: 100%;" placeholder="Password">
                     <br>
                     <div class="" style="font-size: 14px;text-align: left;">
                         <label for="checkbox1" style="font-size:13px;font-weight:normal;">
@@ -540,13 +548,7 @@
                     ">
                     <br>
 
-                    <input type="password" id="singupPw" placeholder="Password" style="border-width: 0px;
-                    background: #475e6b !important;
-                    border: 1px solid #2f3e47;
-                    padding: 10px;
-                    border-radius: 5px;
-                    font-size: 14px;    width: 100%;
-                    ">
+                    <input type="password" id="singupPw" placeholder="Password" style="border-width: 0px; background: #475e6b !important; border: 1px solid #2f3e47;  padding: 10px;  border-radius: 5px;font-size: 14px; width: 100%;">
                     <div class="" style="font-size: 14px;text-align: left;">
                         <label for="checkbox2" style="font-size:13px;font-weight:normal;">
                             <input type="checkbox" id="checkbox1" name="checkbox2" value="option1"> Remember me 
@@ -595,6 +597,20 @@
                             <span id="tradeRecommend" style="font-size:13px"> | <a href="javascript:launchRecommendInfo()" style="color:white">Trade Recommendations</a></span>
 
                             </span>
+
+                            <span id="notesPlace" style="font-size:13px"> | <a href="javascript:goToNotes()" style="color:white">My Notes</a></span>
+
+
+                             <span id="coorPlace" style="font-size:13px"> | <a href="javascript:goToCoor()" style="color:white">Correlations</a></span>
+
+                            </span>
+
+
+                            <br><hr>
+                            <div id="cryptoStats">
+                            <span class="cryptoTop"> Coin</span> Cap: <span id="theCryptoCap">$80B</span> <span id="coinChange" style="color:#15a661">(+15%)</span> | All Cryptos Cap: <span id="cryptoCap" style="color:#15a661">$680B</span> | <span class="cryptoTop"> Coin</span> Volume: <span id="cryptoVol" style="color:#15a661">$1.1B</span>  |  All Cryptos Volume: <span id="globalVol" style="color:#15a661">$32.1B </span>
+                        </div>
+
                             <div id="hello"  class="container" style="text-align:center; padding:20px; font-size:10px; margin-top:10px">
                                 
                             <div class="row">
@@ -970,6 +986,8 @@
                             </div>
                             </div>
 
+                            <span id="tradeTotal" style="padding-top:10px; padding-bottom:10px; display:block"></span>
+
 
                                     <a href="javascript:placeOrder()" class="btn btn-primary realButton">Place Order</a>
                                     <a href="javascript:placeMockBuyOrder()" class="btn btn-primary mockButton" id="mockBuyButton">Place Mock Order</a>
@@ -1009,7 +1027,7 @@
                             <span id="mt-amount-help-inline-short" class="help-block"></span>
                             </div>
                             </div>
-
+ <span id="tradeTotal1" style="padding-top:10px; padding-bottom:10px; display:block"></span>
 
                                     <a href="javascript:placeOrder()" class="btn btn-primary realButton">Place Order</a>
                                     <a href="javascript:placeMockSellOrder()" class="btn btn-primary mockButton" id="mockSellButton">Place Mock Order</a>
@@ -1455,6 +1473,30 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+
+
+ <div id="blog_panel" class="card_panel" style="color: #fff;padding:20px;margin-top:10px;">
+                                    <div id="notesSec" class="notesSec" >
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                              <div id="notesHead" style="overflow-y: hidden; background: transparent;border-bottom: 2px solid #636b6f;""> <h3>My Notes</h3></div>
+                                           <br>
+                                                 <form  action="#" id="form1">
+    <input type="text" name="item" id="item" placeholder="Add New" style="width:100%; font-size:17px" />
+</form>  <br>
+<ul id="list1"></ul>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
                         </div>
                     </div>
                     <footer class="footer text-right">
@@ -1549,6 +1591,8 @@
 
 <script src="js/tickerNews.js"></script>
 <div class="ticker-wrap">
+
+    <div id="hideNewsReel" style="position:absolute; top:-50px; height:50px; background-color:black; color:white; font-size:20px; right:0px; padding-top:10px; padding-bottom:10px; padding-left:10px; padding-right:10px; z-index:100000; display:none">Hide Reel</div>
 
 <p class="marquee"><span></span></p>
  
